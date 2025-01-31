@@ -1,18 +1,11 @@
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+// import { Route, Routes } from "react-router-dom";
+import { BottomMenu } from "./components/bottomMenu/BottomMenu";
 
 function App() {
-
-  return (
-    <Routes>
-      <Route />
-      <Route />
-      <Route />
-      <Route />
-      <Route />
-    </Routes>
-  );
+  return <div  className="flex justify-center">
+    <BottomMenu />
+  </div>;
 }
 
 export default App;
