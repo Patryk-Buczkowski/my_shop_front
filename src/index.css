@@ -1,6 +1,14 @@
 :root {
   --color-primary: #7fff00;
   --color-secondary: #1E3A8A;
+  --bgColor: #333;
+  --buttonTextColor :#444;
+}
+
+body {
+  font-family: "Sour Gummy", serif;
+  color: #FFF;
+  background-color: var(--bgColor);
 }
 
 @import "tailwindcss";

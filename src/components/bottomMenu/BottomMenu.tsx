@@ -6,8 +6,6 @@ import { useState } from "react";
 export const BottomMenu: React.FC = () => {
   const [selectedIcon, setSelectedIcon] = useState("Home");
 
-  //   const handleSelect = (name: string) => {};
-
   const icons = [
     { name: "Home", component: Home },
     { name: "Category", component: Layers3 },
@@ -18,15 +16,15 @@ export const BottomMenu: React.FC = () => {
 
   return (
     <div
-      className={`flex box-border justify-center w-[80%] mt-16 gap-1 h-10 bg-[var(--color-primary)] p-3 relative rounded-full`}
+      className={`flex box-border justify-center w-[80%] mt-3 gap-1 h-10 bg-[var(--color-primary)] p-3 relative rounded-full`}
     >
-      <div className="w-full z-10 flex h-fit justify-between pr-1 pl-1 gap-1 text-sm">
+      <div className="w-fit z-10 flex h-fit gap-5 m-auto text-sm">
         {icons.map(({ component: Icon, name }) => (
           <div
             key={name}
-            className={cn('flex flex-col relative gap-0.5', {
-                [style.icon_after]: selectedIcon === name
-                })}
+            className={cn("flex flex-col relative gap-0.5", {
+              [style.icon_after]: selectedIcon === name,
+            })}
             onClick={() => setSelectedIcon(name)}
           >
             <Icon
