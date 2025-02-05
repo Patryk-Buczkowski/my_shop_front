@@ -2,23 +2,16 @@ import { ButtonMinus } from "../buttonMinus/ButtonMinus";
 import { ButtonPlus } from "../buttonPlus/ButtonPlus";
 import { useCartStore } from "../../zustand/useCartStore";
 import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { DeliveryAdress } from "../../types/deliveryAdress";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
 
 export const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
     useCartStore();
-  const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
-    null
-  );
+  const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(null);
   const [isEdited, setIsEdited] = useState(true);
-  const [formFields, setFormFields] = useState<DeliveryAdress>({
-    country: "",
-    city: "",
-    street_number: "",
-    voivodeship_region: "",
-    zip_code: "",
-  });
   const formInputs: (keyof DeliveryAdress)[] = ["city","country","street_number", "voivodeship_region", "zip_code"];
 
   const handlerCloseInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -27,34 +20,26 @@ export const Cart: React.FC = () => {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof DeliveryAdress
-  ) => {
-    setFormFields({
-      ...formFields,
-      [field]: e.target.value,
-    });
-  };
-
-  const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setDeliveryAdress(formFields);
-    setIsEdited(false);
-  };
+  const validationSchema = Yup.object({
+    country: Yup.string().required("Country is required"),
+    city: Yup.string().required("City is required"),
+    street_number: Yup.string().required("Street number is required"),
+    voivodeship_region: Yup.string().required("Region is required"),
+    zip_code: Yup.string().required("Zip code is required"),
+  });
 
   return (
     <div className="flex flex-col w-full p-2 gap-0.5">
       <h3 className="font-bold tracking-wider">Cart</h3>
-      {/* wyswietl adres dostawy z inputem do edycjii */}
+
       {!isEdited && (
         <div className="flex justify-between max-w-[300px] pb-3 items-end">
           <p className="">
             {deliveryAdress === null ? (
-              "Add delivery adres"
+              "Add delivery address"
             ) : (
               <>
-                <h4>Delivery adress</h4>
+                <h4>Delivery address</h4>
                 <p>Country: {deliveryAdress.country}</p>
                 <p>City: {deliveryAdress.city}</p>
                 <p>Street & number: {deliveryAdress.street_number}</p>
@@ -69,34 +54,55 @@ export const Cart: React.FC = () => {
           </div>
         </div>
       )}
-      {isEdited && (
-        <form className="pb-3" onSubmit={(e) => handlerSubmit(e)}>
-          {formInputs.map(input => (
-            <input
-            className="mb-1 rounded-md text-sm border-2 border-[var(--color-primary-light)]"
-            type="text"
-            name={input}
-            placeholder={`Type ${input}`}
-            onChange={(e) => handleInputChange(e, `${input}`)}
-            onKeyDown={(e) => handlerCloseInput(e)}
-            required
-          />
-          ))}
 
-          <button className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)]">
-            Save Adress ✅
-          </button>
-        </form>
+      {isEdited && (
+        <Formik
+          initialValues={{
+            country: "",
+            city: "",
+            street_number: "",
+            voivodeship_region: "",
+            zip_code: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => {
+            setDeliveryAdress(values);
+            setIsEdited(false);
+          }}
+        >
+          {({ handleChange, handleBlur, values, errors, touched }) => (
+            <Form className="pb-3">
+              {formInputs.map((input) => (
+                <div key={input} className="mb-2">
+                  <Field
+                    className="mb-1 rounded-md text-sm border-2 border-[var(--color-primary-light)]"
+                    type="text"
+                    name={input}
+                    placeholder={`Type ${input}`}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values[input]}
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handlerCloseInput(e)}
+                  />
+                  {errors[input] && touched[input] && (
+                    <div className="text-red-500 text-xs">{errors[input]}</div>
+                  )}
+                </div>
+              ))}
+
+              <button className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)]" type="submit">
+                Save Address ✅
+              </button>
+            </Form>
+          )}
+        </Formik>
       )}
+
       <div>
         {cart.map((product) => (
-          <div key={product.id} className="flex justify-between mb-1.5 ">
+          <div key={product.id} className="flex justify-between mb-1.5">
             <div className="relative h-fit">
-              <img
-                className=" relative w-[85px] h-[85px]"
-                src={product.pictureUrl}
-                alt="product image"
-              />
+              <img className="relative w-[85px] h-[85px]" src={product.pictureUrl} alt="product image" />
               <div
                 onClick={() => removeFromCart(product.id)}
                 className="absolute w-5.5 h-5.5 rounded-full bottom-2 left-1 bg-white flex justify-center items-center"
@@ -105,9 +111,8 @@ export const Cart: React.FC = () => {
               </div>
             </div>
 
-            <div className=" max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
+            <div className="max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
               <p>{product.title}</p>
-
               <p>{product.description}</p>
               <p> avg Rate: {product.averageRate.toFixed(2)}</p>
               <span className="flex justify-between">
@@ -115,7 +120,7 @@ export const Cart: React.FC = () => {
 
                 <span className="flex justify-between min-w-[35%] max-w-[40%]">
                   <ButtonPlus product={product} add={addToCart} />
-                  <p className=" rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)] pr-0.5">{`${product.amount}`}</p>
+                  <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)] pr-0.5">{`${product.amount}`}</p>
                   <ButtonMinus product={product} subtract={decreaseAmount} />
                 </span>
               </span>
@@ -128,5 +133,3 @@ export const Cart: React.FC = () => {
     </div>
   );
 };
-
-// const customImageUrl = `https://picsum.photos/${width}/${height}`;
