@@ -17,7 +17,7 @@ function App() {
     const getProduct = async () => {
       try {
         const response = await axios.get(
-          `${backendUrl}/product/6793afe48e74d1a4bbb01c04`
+          `${backendUrl}/product/6793afe48e74d1a4bbb01c06`
         );
         if (response) {
           setProduct(response.data);
@@ -31,11 +31,11 @@ function App() {
     getProduct();
   }, []);
 
-  console.log('product', product)
+  console.log("product", product);
 
   return (
     <div className="flex flex-col items-center justify-center m-auto w-full max-w-[375px]">
-      {product && <AddToCart item={product} />}
+      {product ? <AddToCart item={product} /> : <p>...Loading</p>}
       {/* <BottomMenu /> */}
       <Cart />
     </div>
