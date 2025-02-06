@@ -10,23 +10,35 @@ import * as Yup from "yup";
 export const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
     useCartStore();
-  const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(null);
-  const [isEdited, setIsEdited] = useState(true);
-  const formInputs: (keyof DeliveryAdress)[] = ["city","country","street_number", "voivodeship_region", "zip_code"];
-
-  const handlerCloseInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === "Escape") {
-      setIsEdited(false);
-    }
-  };
+  const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
+    null
+  );
+  const [isEdited, setIsEdited] = useState(false);
+  const formInputs: (keyof DeliveryAdress)[] = [
+    "city",
+    "country",
+    "street_number",
+    "voivodeship",
+    "zip_code",
+  ];
 
   const validationSchema = Yup.object({
     country: Yup.string().required("Country is required"),
     city: Yup.string().required("City is required"),
     street_number: Yup.string().required("Street number is required"),
-    voivodeship_region: Yup.string().required("Region is required"),
+    voivodeship: Yup.string().required("Region is required"),
     zip_code: Yup.string().required("Zip code is required"),
   });
+
+  const handlerCloseInput = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    resetForm: () => void
+  ) => {
+    if (e.key === "Escape") {
+      resetForm();
+      setIsEdited(false);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full p-2 gap-0.5">
@@ -34,7 +46,7 @@ export const Cart: React.FC = () => {
 
       {!isEdited && (
         <div className="flex justify-between max-w-[300px] pb-3 items-end">
-          <p className="">
+          <span>
             {deliveryAdress === null ? (
               "Add delivery address"
             ) : (
@@ -46,11 +58,16 @@ export const Cart: React.FC = () => {
                 <p>Zip code: {deliveryAdress.zip_code}</p>
               </>
             )}
-          </p>
+          </span>
 
-          <div className="flex items-center gap-2" onClick={() => setIsEdited(true)}>
+          <div
+            className="flex items-center gap-2"
+            onClick={() => setIsEdited(true)}
+          >
             <Pencil size={14} />
-            <span className="font-extrabold tracking-wider text-lg text-[var(--color-secondary)]">Edit</span>
+            <span className="font-extrabold tracking-wider text-lg text-[var(--color-secondary)]">
+              Edit
+            </span>
           </div>
         </div>
       )}
@@ -61,7 +78,7 @@ export const Cart: React.FC = () => {
             country: "",
             city: "",
             street_number: "",
-            voivodeship_region: "",
+            voivodeship: "",
             zip_code: "",
           }}
           validationSchema={validationSchema}
@@ -70,19 +87,28 @@ export const Cart: React.FC = () => {
             setIsEdited(false);
           }}
         >
-          {({ handleChange, handleBlur, values, errors, touched }) => (
+          {({
+            handleChange,
+            handleBlur,
+            values,
+            errors,
+            touched,
+            resetForm,
+          }) => (
             <Form className="pb-3">
               {formInputs.map((input) => (
                 <div key={input} className="mb-2">
                   <Field
-                    className="mb-1 rounded-md text-sm border-2 border-[var(--color-primary-light)]"
+                    className="mb-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]"
                     type="text"
                     name={input}
                     placeholder={`Type ${input}`}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values[input]}
-                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handlerCloseInput(e)}
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                      handlerCloseInput(e, resetForm)
+                    }
                   />
                   {errors[input] && touched[input] && (
                     <div className="text-red-500 text-xs">{errors[input]}</div>
@@ -90,8 +116,20 @@ export const Cart: React.FC = () => {
                 </div>
               ))}
 
-              <button className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)]" type="submit">
+              <button
+                className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)] select-none active:text-[var(--color-primary-light)]"
+                type="submit"
+                onClick={() => console.log(deliveryAdress)}
+              >
                 Save Address ✅
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsEdited(false)}
+                className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)] select-none  active:border-red-600"
+              >
+                ❌
               </button>
             </Form>
           )}
@@ -102,7 +140,11 @@ export const Cart: React.FC = () => {
         {cart.map((product) => (
           <div key={product.id} className="flex justify-between mb-1.5">
             <div className="relative h-fit">
-              <img className="relative w-[85px] h-[85px]" src={product.pictureUrl} alt="product image" />
+              <img
+                className="relative w-[85px] h-[85px]"
+                src={product.pictureUrl}
+                alt="product image"
+              />
               <div
                 onClick={() => removeFromCart(product.id)}
                 className="absolute w-5.5 h-5.5 rounded-full bottom-2 left-1 bg-white flex justify-center items-center"

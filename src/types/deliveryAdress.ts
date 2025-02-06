@@ -2,6 +2,6 @@ export type DeliveryAdress = {
     country: string;
     city: string;
     street_number: string;
-    voivodeship_region: string;
+    voivodeship: string;
     zip_code: string;
   };
