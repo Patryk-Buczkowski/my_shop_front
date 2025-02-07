@@ -4,9 +4,10 @@ import "./App.css";
 // import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { ProductType } from "./types/productType";
-import { Cart } from "./components/cart/Cart";
+// import { Cart } from "./components/cart/Cart";
 // import { useCart } from "./costomHooks/useCart.ts";
-import { AddToCart } from "./components/addToCart/AddToCart.tsx";
+// import { AddToCart } from "./components/addToCart/AddToCart.tsx";
+import { AllCategories } from "./pages/allCategories/AllCategories.tsx";
 
 function App() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -35,9 +36,10 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center m-auto w-full max-w-[375px]">
-      {product ? <AddToCart item={product} /> : <p>...Loading</p>}
+      {/* {product ? <AddToCart item={product} /> : <p>...Loading</p>} */}
       {/* <BottomMenu /> */}
-      <Cart />
+      {/* <Cart /> */}
+      <AllCategories />
     </div>
   );
 }

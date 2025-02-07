@@ -17,30 +17,34 @@ export type ProductType = {
   updateAverageRate: (newRate: number) => Promise<void>;
 };
 
-export type CategoryType =
-  | "food"
-  | "drinks"
-  | "meat"
-  | "dairy products"
-  | "household goods"
-  | "household chemicals"
-  | "cosmetics"
-  | "bio food"
-  | "snacks"
-  | "confectionery"
-  | "seafood"
-  | "frozen food"
-  | "baked goods"
-  | "fruits and vegetables"
-  | "beverages"
-  | "pet supplies"
-  | "baby products"
-  | "health supplements"
-  | "electronics"
-  | "personal hygiene"
-  | "stationery"
-  | "home decor"
-  | "other";
+export const categories = [
+  "food",
+  "drinks",
+  "meat",
+  "dairy products",
+  "household goods",
+  "household chemicals",
+  "cosmetics",
+  "bio food",
+  "snacks",
+  "confectionery",
+  "seafood",
+  "frozen food",
+  "baked goods",
+  "fruits and vegetables",
+  "beverages",
+  "pet supplies",
+  "baby products",
+  "health supplements",
+  "electronics",
+  "personal hygiene",
+  "stationery",
+  "home decor",
+  "other",
+] as const;
+
+export type CategoryType = typeof categories[number];
+
 
 export type CommentType = {
   comment: string;
