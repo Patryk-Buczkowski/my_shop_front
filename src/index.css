@@ -5,8 +5,14 @@
   --bgColor: #333;
   --buttonTextColor :#444;
 }
+* {
+  box-sizing: border-box;
+}
 
-body {
+body {  
+  width: 100%;
+  display: flex;
+  justify-content: center;
   font-family: "Sour Gummy", serif;
   color: #FFF;
   background-color: var(--bgColor);
