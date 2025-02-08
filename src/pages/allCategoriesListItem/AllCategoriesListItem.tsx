@@ -9,7 +9,7 @@ type Props = {
 
 export const AllCategoriesListItem: React.FC<Props> = ({ category }) => {
   return (
-    <li className="w-full min-w-[80px]" key={category}>
+    <li className="w-full min-w-20 sm:min-w-30" key={category}>
       <Link
         to={{
           pathname: "/all_categories",
@@ -18,11 +18,11 @@ export const AllCategoriesListItem: React.FC<Props> = ({ category }) => {
         className="flex flex-col items-center"
       >
         <img
-          className="rounded-full border-2 h-11 w-11"
+          className="rounded-full border-2 h-11 sm:h-25 w-11 sm:w-25 active:border-[var(--color-primary)]"
           src={categoriesWithImg[category]}
           alt={`${category} image`}
         />
-        <p className="whitespace-break-spaces text-center">{category}</p>
+        <p className="whitespace-break-spaces text-center sm:text-2xl">{category}</p>
       </Link>
     </li>
   );

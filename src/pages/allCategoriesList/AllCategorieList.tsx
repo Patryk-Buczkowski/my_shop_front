@@ -13,9 +13,12 @@ export const AllCategoriesList = () => {
   >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [screenWith, setScreenWith] = useState(window.innerWidth);
+  const [perPage, setPerPage] = useState("4");
   const [searchParams] = useSearchParams();
+  const selectValues = ["4", "8", "16", "32"];
+  const [pageNr, setPageNr] = useState(0);
 
-// get Products
+  // get Products
   useEffect(() => {
     const Products = async () => {
       try {
@@ -36,7 +39,7 @@ export const AllCategoriesList = () => {
     Products();
   }, [searchParams]);
 
-// handler resize
+  // handler resize
   useEffect(() => {
     const handleResize = () => {
       setScreenWith(window.innerWidth);
@@ -50,22 +53,39 @@ export const AllCategoriesList = () => {
   }, []);
 
   return (
-    <div className="w-[310px] flex flex-col p-2 sm:w-[680px]">
+    <div className="w-[310px] flex flex-col p-1 sm:w-[680px]">
       <ul className="flex gap-2 mb-4 overflow-auto">
         {categories.map((category) => (
           <AllCategoriesListItem category={category} key={category} />
         ))}
       </ul>
 
+      <select onChange={(e) => setPerPage(e.target.value)} className="w-10 mb-3 border-1 rounded-sm">
+        {selectValues.map((value) => (
+          <option key={value} className="text-black" value={`${value}`}>{value}</option>
+        ))}
+      </select>
+
       <Pagination
-        size="small"
+        size={screenWith > 640 ? "medium" : "small"}
         count={41}
         defaultPage={16}
         siblingCount={screenWith > 640 ? 3 : 2}
         boundaryCount={screenWith > 640 ? 3 : 0}
         variant="outlined"
         color="primary"
-        className="mb-3 self-center "
+        className="mb-3 self-center"
+        sx={{
+          "& .MuiPaginationItem-root": {
+            color: "var(--color-secondary)",
+            borderColor: "var(--buttonTextColor)",
+          },
+          "& .MuiPaginationItem-page.Mui-selected": {
+            backgroundColor: "var(--color-primary-light)",
+            color: "var(--color-secondary)",
+          },
+        }}
+        onChange={(_event, page) => console.log("Wybrana strona:", page)}
       />
 
       {isLoading && <Loading size={150} />}
