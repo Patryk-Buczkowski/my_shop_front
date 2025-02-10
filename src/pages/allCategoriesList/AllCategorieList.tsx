@@ -24,12 +24,12 @@ export const AllCategoriesList = () => {
   const startFrom = perPage * pageNr - perPage;
   const endOn = Math.min(perPage * pageNr, selectedCategoryProducts.length);
   const sortByArray: SortBy[] = [
-    "name:asc",
-    "name:desc",
-    "price:asc",
-    "price:desc",
-    "rating:asc",
-    "rating:desc",
+    "title_asc",
+    "title_desc",
+    "price_asc",
+    "price_desc",
+    "rating_asc",
+    "rating_desc",
   ];
   const [titleQuery, setTitleQuery] = useState("");
   const [minPrice, setMinPrice] = useState<number>(0);
@@ -41,18 +41,18 @@ export const AllCategoriesList = () => {
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
   const [sortBy, setSortBy] = useState<SortBy[]>(() => {
     const initialSortBy: SortBy[] = [];
-  
+
     for (const [key, value] of searchParams.entries()) {
       const sortOption = `${key}:${value}` as SortBy;
       if (sortByArray.includes(sortOption)) {
         initialSortBy.push(sortOption);
       }
     }
-  
+
     return initialSortBy;
   });
 
-  console.log('sortBy', sortBy)
+  console.log("sortBy", sortBy);
 
   const handlerSelect = (num: number) => {
     setPerPage(num);
@@ -61,21 +61,23 @@ export const AllCategoriesList = () => {
 
   const handleSortChange = (item: SortBy) => {
     const newParams = new URLSearchParams(searchParams);
-    const [key, value] = item.split(":");
+    const [key] = item.split("_");
 
-    if (newParams.has(key) && newParams.get(key) === value) {
-      newParams.delete(key)
+    if (newParams.getAll("sortBy").includes(item)) {
+      const values = newParams.getAll("sortBy").filter(val => val !== item);
+      newParams.delete("sortBy", item);
+      values.forEach(val => newParams.append('sortBy', val))
     } else {
-      newParams.set(key, value);
+      newParams.set("sortBy", item);
     }
-    
+
     setSearchPrams(newParams);
 
     setSortBy((prevState) => {
-     if (prevState.includes(item)) {
-      return prevState.filter((i) => i !== item);
-    }
-    const newState = prevState.filter((i) => !i.startsWith(key));
+      if (prevState.includes(item)) {
+        return prevState.filter((i) => i !== item);
+      }
+      const newState = prevState.filter((i) => !i.startsWith(key));
 
       return [...newState, item];
     });

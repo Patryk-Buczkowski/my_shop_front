@@ -1,10 +1,10 @@
 export const sortByOptions = [
-  "price:asc",
-  "price:desc",
-  "name:asc",
-  "name:desc",
-  "rating:asc",
-  "rating:desc",
+  "price_asc",
+  "price_desc",
+  "title_asc",
+  "title_desc",
+  "rating_asc",
+  "rating_desc",
 ] as const;
 
 export type SortBy = (typeof sortByOptions)[number];
