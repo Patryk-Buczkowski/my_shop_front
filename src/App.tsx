@@ -8,7 +8,7 @@ import "./App.css";
 // import { useCart } from "./costomHooks/useCart.ts";
 // import { AddToCart } from "./components/addToCart/AddToCart.tsx";
 import { AllCategories } from "./pages/allCategories/AllCategories.tsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
   // const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -37,12 +37,13 @@ function App() {
 
   return (
     <div className="m-auto">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
+        <Route path="/" element={<Navigate to="/all_categories" />} />
           <Route path="/all_categories" element={<AllCategories />} />
           <Route path="/category" element={<div>Lista produktów</div>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
       <div className="flex flex-col items-center justify-center m-auto w-full max-w-[375px]">
         {/* {product ? <AddToCart item={product} /> : <p>...Loading</p>} */}
         {/* <BottomMenu /> */}
