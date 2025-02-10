@@ -11,6 +11,7 @@ import {
   useBreakpointStore,
 } from "../../zustand/useBreakPoint";
 import { SelectElementsPerPage } from "../../components/selectElementsPerPage";
+import { SortBy } from "../../types/filterProductType";
 
 export const AllCategoriesList = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<
@@ -22,19 +23,62 @@ export const AllCategoriesList = () => {
   const [pageNr, setPageNr] = useState(1);
   const startFrom = perPage * pageNr - perPage;
   const endOn = Math.min(perPage * pageNr, selectedCategoryProducts.length);
+  const sortByArray: SortBy[] = [
+    "name:asc",
+    "name:desc",
+    "price:asc",
+    "price:desc",
+    "rating:asc",
+    "rating:desc",
+  ];
   const [titleQuery, setTitleQuery] = useState("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [visibleProducts, setVisibleProducts] = useState(
     selectedCategoryProducts.slice(startFrom, endOn)
   );
+  const [openCheckbox, setOpenCheckbox] = useState(false);
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
+  const [sortBy, setSortBy] = useState<SortBy[]>(() => {
+    const initialSortBy: SortBy[] = [];
+  
+    for (const [key, value] of searchParams.entries()) {
+      const sortOption = `${key}:${value}` as SortBy;
+      if (sortByArray.includes(sortOption)) {
+        initialSortBy.push(sortOption);
+      }
+    }
+  
+    return initialSortBy;
+  });
 
-  console.log(searchParams.toString());
+  console.log('sortBy', sortBy)
 
   const handlerSelect = (num: number) => {
     setPerPage(num);
     setPageNr(1);
+  };
+
+  const handleSortChange = (item: SortBy) => {
+    const newParams = new URLSearchParams(searchParams);
+    const [key, value] = item.split(":");
+
+    if (newParams.has(key) && newParams.get(key) === value) {
+      newParams.delete(key)
+    } else {
+      newParams.set(key, value);
+    }
+    
+    setSearchPrams(newParams);
+
+    setSortBy((prevState) => {
+     if (prevState.includes(item)) {
+      return prevState.filter((i) => i !== item);
+    }
+    const newState = prevState.filter((i) => !i.startsWith(key));
+
+      return [...newState, item];
+    });
   };
 
   useBreakpointListener();
@@ -48,6 +92,10 @@ export const AllCategoriesList = () => {
     } else {
       newParams.delete("title");
     }
+
+    // if (sortBy !== []) {
+    //   // ustaw dla kazdego z max 3 elem search query
+    // }
 
     if (minPrice) {
       newParams.set("minPrice", minPrice.toString());
@@ -89,9 +137,6 @@ export const AllCategoriesList = () => {
     setVisibleProducts(selectedCategoryProducts.slice(startFrom, endOn));
   }, [endOn, selectedCategoryProducts, setPerPage, startFrom]);
 
-  console.log("min", minPrice);
-  console.log("max", maxPrice);
-
   return (
     <div className="w-[310px] flex flex-col p-1 sm:w-[680px]">
       <ul className="flex gap-2 mb-4 overflow-auto">
@@ -100,7 +145,7 @@ export const AllCategoriesList = () => {
         ))}
       </ul>
 
-      <div className="flex gap-2 w-fit mb-3">
+      <div className="flex gap-2 w-fit mb-3 relative">
         <SelectElementsPerPage handlerSelect={handlerSelect} />
 
         <input
@@ -131,6 +176,28 @@ export const AllCategoriesList = () => {
           type="number"
           name="maxPrice"
         />
+
+        {openCheckbox && (
+          <div
+            className="absolute p-1 transform -translate-y-full 
+           right-0 bottom-0-0 flex rounded-lg flex-col gap-1 bg-[var(--color-secondary)]"
+          >
+            {sortByArray.map((item) => (
+              <label
+                key={item}
+                className=" flex justify-between w-27 rounded-sm border-1 pl-0.5 border-[var(--primary-light)]"
+              >
+                {item}
+                <input
+                  onChange={() => handleSortChange(item)}
+                  type="checkbox"
+                  name={item}
+                  checked={sortBy.includes(item)}
+                />
+              </label>
+            ))}
+          </div>
+        )}
 
         <button
           className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
