@@ -1,6 +1,7 @@
 {
   "name": "my_shop_front",
   "private": true,
+  "homepage": "https://Patryk-Buczkowski.github.io/my_shop_front/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
