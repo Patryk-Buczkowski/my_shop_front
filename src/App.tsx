@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import "./App.css";
 // import { BottomMenu } from "./components/bottomMenu/BottomMenu.tsx";
 // import { Route, Routes } from "react-router-dom";
-import axios from "axios";
-import { ProductType } from "./types/productType";
+// import axios from "axios";
+// import { ProductType } from "./types/productType";
 // import { Cart } from "./components/cart/Cart";
 // import { useCart } from "./costomHooks/useCart.ts";
 // import { AddToCart } from "./components/addToCart/AddToCart.tsx";
@@ -11,8 +11,8 @@ import { AllCategories } from "./pages/allCategories/AllCategories.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [product, setProduct] = useState<ProductType | null>(null);
+  // const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // const [product, setProduct] = useState<ProductType | null>(null);
 
   // get one test prouct
   // useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
   //   getProduct();
   // }, []);
 
-  console.log("product", product);
+  // console.log("product", product);
 
   return (
     <div className="m-auto">

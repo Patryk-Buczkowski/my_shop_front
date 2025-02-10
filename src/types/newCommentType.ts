@@ -1,7 +1,5 @@
-import { Types } from "mongoose";
-
 export type NewCommentType = {
-  productId: Types.ObjectId;
-  userId: Types.ObjectId;
+  productId: string;
+  userId: string;
   comment: string;
 };

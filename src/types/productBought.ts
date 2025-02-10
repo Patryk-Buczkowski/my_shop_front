@@ -1,6 +1,4 @@
-import { Types } from "mongoose";
-
 export type ProductBought = {
-  product: Types.ObjectId;
+  product: string;
   amount: number;
 };

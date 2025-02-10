@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 
 export type ProductType = {
   id: string;
@@ -48,6 +47,6 @@ export type CategoryType = typeof categories[number];
 
 export type CommentType = {
   comment: string;
-  userId: Types.ObjectId;
-  productId: Types.ObjectId;
+  userId: string;
+  productId: string;
 };
