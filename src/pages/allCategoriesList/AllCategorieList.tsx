@@ -12,6 +12,7 @@ import {
 } from "../../zustand/useBreakPoint";
 import { SelectElementsPerPage } from "../../components/selectElementsPerPage";
 import { SortBy } from "../../types/filterProductType";
+import styles from "./AllCategorieList.module.scss";
 
 export const AllCategoriesList = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<
@@ -64,9 +65,9 @@ export const AllCategoriesList = () => {
     const [key] = item.split("_");
 
     if (newParams.getAll("sortBy").includes(item)) {
-      const values = newParams.getAll("sortBy").filter(val => val !== item);
+      const values = newParams.getAll("sortBy").filter((val) => val !== item);
       newParams.delete("sortBy", item);
-      values.forEach(val => newParams.append('sortBy', val))
+      values.forEach((val) => newParams.append("sortBy", val));
     } else {
       newParams.set("sortBy", item);
     }
@@ -137,7 +138,7 @@ export const AllCategoriesList = () => {
   // set visible proucts
   useEffect(() => {
     setVisibleProducts(selectedCategoryProducts.slice(startFrom, endOn));
-  }, [endOn, selectedCategoryProducts, setPerPage, startFrom]);
+  }, [endOn, selectedCategoryProducts, startFrom]);
 
   return (
     <div className="w-[310px] flex flex-col p-1 sm:w-[680px]">
@@ -147,7 +148,7 @@ export const AllCategoriesList = () => {
         ))}
       </ul>
 
-      <div className="flex gap-2 w-fit mb-3 relative">
+      <div className="flex flex-wrap gap-2 w-60 mb-3 relative">
         <SelectElementsPerPage handlerSelect={handlerSelect} />
 
         <input
@@ -179,10 +180,10 @@ export const AllCategoriesList = () => {
           name="maxPrice"
         />
 
-        {openCheckbox && (
+        {/* {openCheckbox && ( */}
           <div
-            className="absolute p-1 transform -translate-y-full 
-           right-0 bottom-0-0 flex rounded-lg flex-col gap-1 bg-[var(--color-secondary)]"
+            className={`z-10 absolute p-1 transform translate-x-8 translate-y-9
+           right-0 flex rounded-lg flex-col gap-1 bg-[var(--color-secondary)]  ${openCheckbox ? styles.anime__open : styles.anime__close}`}
           >
             {sortByArray.map((item) => (
               <label
@@ -199,7 +200,7 @@ export const AllCategoriesList = () => {
               </label>
             ))}
           </div>
-        )}
+        {/* )} */}
 
         <button
           className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
