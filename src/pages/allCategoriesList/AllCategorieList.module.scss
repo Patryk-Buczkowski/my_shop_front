@@ -24,11 +24,11 @@
 
 .anime {
     &__open {
-        animation: slowShow 1.5s ease-in;
+        animation: slowShow 1s ease-in;
     }
 
     &__close {
-        animation: slowHide 1.5s ease-out forwards;          
+        animation: slowHide 1s ease-out forwards;          
     }
     
 }
