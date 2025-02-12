@@ -6,7 +6,7 @@ export const AllCategories: React.FC = () => {
     <div className="p-1">
       <h2 className="mb-3 sm:text-2xl">All Categories</h2>
 
-      <nav className="w-full sm:max-w-[600px] flex flex-col overflow-auto">
+      <nav className="w-[95%]">
         <AllCategoriesList />
       </nav>
     </div>

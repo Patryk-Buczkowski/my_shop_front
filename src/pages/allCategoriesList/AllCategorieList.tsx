@@ -142,13 +142,13 @@ export const AllCategoriesList = () => {
 
   return (
     <div className="w-[310px] flex flex-col p-1 sm:w-[680px]">
-      <ul className="flex gap-2 mb-4 overflow-auto">
+      <ul className="flex gap-2 mb-4 w-full overflow-auto">
         {categories.map((category) => (
           <AllCategoriesListItem category={category} key={category} />
         ))}
       </ul>
 
-      <div className="flex flex-wrap gap-2 w-60 mb-3 relative">
+      <div className="flex flex-wrap gap-2 w-60 sm:w-90 mb-3">
         <SelectElementsPerPage handlerSelect={handlerSelect} />
 
         <input
@@ -178,9 +178,10 @@ export const AllCategoriesList = () => {
           onChange={(e) => setMaxPrice(+e.target.value)}
           type="number"
           name="maxPrice"
-        />
+        />        
 
-        {/* {openCheckbox && ( */}
+        <div className="relative">
+          {/* {openCheckbox && ( */}
           <div
             className={`z-10 absolute p-1 transform translate-x-8 translate-y-9
            right-0 flex rounded-lg flex-col gap-1 bg-[var(--color-secondary)]  ${openCheckbox ? styles.anime__open : styles.anime__close}`}
@@ -202,13 +203,14 @@ export const AllCategoriesList = () => {
           </div>
         {/* )} */}
 
-        <button
-          className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
-          type="button"
-          onClick={() => setOpenCheckbox((prevState) => !prevState)}
-        >
-          Sort by
-        </button>
+          <button
+            className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
+            type="button"
+            onClick={() => setOpenCheckbox((prevState) => !prevState)}
+          >
+            Sort by
+          </button>
+        </div>
       </div>
 
       <Pagination
