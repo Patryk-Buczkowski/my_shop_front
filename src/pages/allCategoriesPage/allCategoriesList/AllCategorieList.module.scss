@@ -1,0 +1,37 @@
+@keyframes slowShow {
+  0% {
+    visibility: visible;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+    visibility: visible;
+  }
+}
+
+@keyframes slowHide {
+  0% {
+    visibility: visible;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+.anime {
+
+  &__open {
+    animation: slowShow 1s ease-in forwards;
+  }
+
+  &__close {
+    animation: slowHide 1s ease-out;
+  }
+}

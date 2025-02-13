@@ -9,8 +9,8 @@
   box-sizing: border-box;
 }
 
-body {  
-  width: 100%;
+body {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   font-family: "Sour Gummy", serif;

@@ -1,17 +1,17 @@
 import { useSearchParams } from "react-router-dom";
-import { categories, ProductType } from "../../types/productType";
+import { categories, ProductType } from "../../../types/productType";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loading } from "../../components/loading";
+import { Loading } from "../../../components/loading";
 import Pagination from "@mui/material/Pagination";
 import { AllCategoriesProduct } from "../allCategoriesProduct";
 import { AllCategoriesListItem } from "../allCategoriesListItem";
 import {
   useBreakpointListener,
   useBreakpointStore,
-} from "../../zustand/useBreakPoint";
-import { SelectElementsPerPage } from "../../components/selectElementsPerPage";
-import { SortBy } from "../../types/filterProductType";
+} from "../../../zustand/useBreakPoint";
+import { SelectElementsPerPage } from "../../../components/selectElementsPerPage";
+import { SortBy } from "../../../types/filterProductType";
 import styles from "./AllCategorieList.module.scss";
 
 export const AllCategoriesList = () => {
@@ -39,6 +39,7 @@ export const AllCategoriesList = () => {
     selectedCategoryProducts.slice(startFrom, endOn)
   );
   const [openCheckbox, setOpenCheckbox] = useState(false);
+  const [visibleCheckbox, setVisibleCheckbox] = useState(false);
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
   const [sortBy, setSortBy] = useState<SortBy[]>(() => {
     const initialSortBy: SortBy[] = [];
@@ -82,6 +83,18 @@ export const AllCategoriesList = () => {
 
       return [...newState, item];
     });
+  };
+
+  const handlerCheckbox = () => {
+    setOpenCheckbox((prevState) => !prevState);
+
+    if (!visibleCheckbox) {
+      setVisibleCheckbox(true);
+    } else {
+      setTimeout(() => {
+        setVisibleCheckbox((prevState) => !prevState);
+      }, 1100);
+    }
   };
 
   useBreakpointListener();
@@ -178,35 +191,35 @@ export const AllCategoriesList = () => {
           onChange={(e) => setMaxPrice(+e.target.value)}
           type="number"
           name="maxPrice"
-        />        
+        />
 
         <div className="relative">
-          {/* {openCheckbox && ( */}
-          <div
-            className={`z-10 absolute p-1 transform translate-x-8 translate-y-9
-           right-0 flex rounded-lg flex-col gap-1 bg-[var(--color-secondary)]  ${openCheckbox ? styles.anime__open : styles.anime__close}`}
-          >
-            {sortByArray.map((item) => (
-              <label
-                key={item}
-                className=" flex justify-between w-27 rounded-sm border-1 pl-0.5 border-[var(--primary-light)]"
-              >
-                {item}
-                <input
-                  onChange={() => handleSortChange(item)}
-                  type="checkbox"
-                  name={item}
-                  checked={sortBy.includes(item)}
-                />
-              </label>
-            ))}
-          </div>
-        {/* )} */}
+          {visibleCheckbox && (
+            <div
+              className={`z-10 invisible absolute p-1 transform translate-x-8 translate-y-9
+           right-0 rounded-lg flex-col gap-1 bg-[var(--color-secondary)]  ${!openCheckbox ? styles.anime__close : styles.anime__open}`}
+            >
+              {sortByArray.map((item) => (
+                <label
+                  key={item}
+                  className=" flex justify-between w-27 rounded-sm border-1 pl-0.5 border-[var(--primary-light)]"
+                >
+                  {item}
+                  <input
+                    onChange={() => handleSortChange(item)}
+                    type="checkbox"
+                    name={item}
+                    checked={sortBy.includes(item)}
+                  />
+                </label>
+              ))}
+            </div>
+          )}
 
           <button
             className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
             type="button"
-            onClick={() => setOpenCheckbox((prevState) => !prevState)}
+            onClick={handlerCheckbox}
           >
             Sort by
           </button>

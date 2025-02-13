@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { categoriesWithImg } from "../../data/categoriesWithImg";
-import { CategoryType } from "../../types/productType";
+import { categoriesWithImg } from "../../../data/categoriesWithImg";
+import { CategoryType } from "../../../types/productType";
 
 type Props = {
   category: CategoryType;

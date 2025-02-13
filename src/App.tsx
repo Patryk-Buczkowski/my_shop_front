@@ -7,8 +7,10 @@ import "./App.css";
 // import { Cart } from "./components/cart/Cart";
 // import { useCart } from "./costomHooks/useCart.ts";
 // import { AddToCart } from "./components/addToCart/AddToCart.tsx";
-import { AllCategories } from "./pages/allCategories/AllCategories.tsx";
+import { AllCategories } from "./pages/allCategoriesPage/allCategories/AllCategories.tsx";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/homePage/Home/Home.tsx";
+import { Layout } from "./components/layout/Layout.tsx";
 
 function App() {
   // const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -36,21 +38,16 @@ function App() {
   // console.log("product", product);
 
   return (
-    <div className="m-auto">
-      <HashRouter>
-        <Routes>
-        <Route path="/" element={<Navigate to="/all_categories" />} />
-          <Route path="/all_categories" element={<AllCategories />} />
-          <Route path="/category" element={<div>Lista produktów</div>} />
-        </Routes>
-      </HashRouter>
-      <div className="flex flex-col items-center justify-center m-auto w-full max-w-[375px]">
-        {/* {product ? <AddToCart item={product} /> : <p>...Loading</p>} */}
-        {/* <BottomMenu /> */}
-        {/* <Cart /> */}
-        {/* <AllCategories /> */}
-      </div>
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="/home" />} />
+          <Route path="home" element={<Home />} />
+          <Route path="all_categories" element={<AllCategories />} />
+          <Route path="category" element={<div>Lista produktów</div>} />
+        </Route>
+      </Routes>
+    </HashRouter>
   );
 }
 

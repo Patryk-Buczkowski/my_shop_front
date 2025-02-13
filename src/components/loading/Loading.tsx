@@ -6,7 +6,7 @@ export const Loading: React.FC<Props> = ({ size }) => {
   return (
     <>
       <div
-        className={`animate-bounce text-center w-40 absolute bottom-0 left-1/2 transform -translate-x-1/2`}
+        className={`animate-bounce text-center w-40 absolute bottom-2 left-1/2 transform -translate-x-1/2`}
       >
         <p className="w-fit">It is free server sorry for long waiting 😥</p>
         <div
