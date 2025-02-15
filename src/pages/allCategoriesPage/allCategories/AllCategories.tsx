@@ -12,7 +12,7 @@ import {
   useBreakpointStore,
 } from "../../../zustand/useBreakPoint";
 import { SortBy } from "../../../types/filterProductType";
-import { Loading } from "../../../components/Loading";
+import { Loading } from "../../../components/loading";
 import { SelectElementsPerPage } from "../../../components/SelectElementsPerPage";
 
 export const AllCategories: React.FC = () => {
