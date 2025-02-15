@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
 
-export const Layout = () => {
+export const Layout: React.FC = () => {
   return (
     <div className="w-[100vw]">
       <header className="w-full z-20 h-[var(--header-height)] font-bold p-2 text-[var(--color-header-nav)]">
