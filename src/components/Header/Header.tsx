@@ -11,9 +11,9 @@ type LinkType = {
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const links: LinkType[] = [
-    { link: "/home", name: "Home" },
-    { link: "/cart", name: "Cart" },
-    { link: "/all_categories", name: "All Categories" },
+    { link: "/home", name: "🏡 Home" },
+    { link: "/cart", name: "🛒 Cart" },
+    { link: "/all_categories", name: "📂 All Categories" },
   ];
 
   return (
