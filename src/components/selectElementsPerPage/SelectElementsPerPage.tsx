@@ -8,7 +8,7 @@ export const SelectElementsPerPage: React.FC<Props> = ({ handlerSelect }) => {
     <select
       name="itemsPerPage"
       onChange={(e) => handlerSelect(+e.target.value)}
-      className="w-10 border-1 rounded-sm"
+      className="w-10 h-7 border-1 rounded-sm"
     >
       {selectValues.map((value) => (
         <option key={value} className="text-black" value={`${value}`}>

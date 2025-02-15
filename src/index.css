@@ -1,16 +1,20 @@
 :root {
+  --header-height: 40px;
+  --footer-height: 40px;
   --color-primary: #7fff00;
   --color-primary-light: #BFFF80;
   --color-secondary: #125aeb;
   --bgColor: #333;
-  --buttonTextColor :#555;
+  --buttonTextColor:#555;
+  --color-header-nav: #60A5FA;
+  width: 100%;
 }
 * {
   box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100vh;  
   display: flex;
   justify-content: center;
   font-family: "Sour Gummy", serif;

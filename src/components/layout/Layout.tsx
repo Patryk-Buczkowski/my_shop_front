@@ -1,13 +1,21 @@
 import { Outlet } from "react-router-dom";
+import { Header } from "../Header";
+import { Footer } from "../Footer";
 
 export const Layout = () => {
   return (
-    <div>
-      <header className="text-red-800">Navbar</header>
-      <main>
+    <div className="w-[100vw]">
+      <header className="w-full z-20 h-[var(--header-height)] font-bold p-2 text-[var(--color-header-nav)]">
+        <Header />
+      </header>
+
+      <main className="z-10 overflow-auto h-[calc(100vh-90px)]">
         <Outlet />
       </main>
-      <footer className="text-red-800" >footer</footer>
+
+      <footer className="z-10 absolute rounded-t-2xl bottom-0 left-0 right-0 border-1 h-[var(--footer-height)] border-transparent" >
+        <Footer />
+      </footer>
     </div>
   );
 };

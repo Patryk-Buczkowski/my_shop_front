@@ -1,5 +1,5 @@
-import { ButtonMinus } from "../buttonMinus/ButtonMinus";
-import { ButtonPlus } from "../buttonPlus/ButtonPlus";
+import { ButtonMinus } from "../ButtonMinus/ButtonMinus";
+import { ButtonPlus } from "../ButtonPlus/ButtonPlus";
 import { useCartStore } from "../../zustand/useCartStore";
 import { Pencil, Trash2 } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
@@ -41,14 +41,14 @@ export const Cart: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full p-2 gap-0.5">
-      <h3 className="font-bold tracking-wider">Cart</h3>
+    <div className="flex flex-col w-full p-1 gap-0.5">
+      <h3 className="font-bold select-none tracking-wider">Cart</h3>
 
       {!isEdited && (
         <div className="flex justify-between max-w-[300px] pb-3 items-end">
           <span>
             {deliveryAdress === null ? (
-              "Add delivery address"
+              <p className="select-none">Add delivery address :</p>
             ) : (
               <>
                 <h4>Delivery address</h4>
@@ -162,7 +162,7 @@ export const Cart: React.FC = () => {
 
                 <span className="flex justify-between min-w-[35%] max-w-[40%]">
                   <ButtonPlus product={product} add={addToCart} />
-                  <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)] pr-0.5">{`${product.amount}`}</p>
+                  <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)]">{`${product.amount}`}</p>
                   <ButtonMinus product={product} subtract={decreaseAmount} />
                 </span>
               </span>
