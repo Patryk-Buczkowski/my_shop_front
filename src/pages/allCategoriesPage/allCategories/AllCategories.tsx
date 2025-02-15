@@ -5,15 +5,15 @@ import { useSearchParams } from "react-router-dom";
 import { ProductType } from "../../../types/productType";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loading } from "../../../components/Loading";
 import Pagination from "@mui/material/Pagination";
 import { AllCategoriesProduct } from "../allCategoriesProduct";
 import {
   useBreakpointListener,
   useBreakpointStore,
 } from "../../../zustand/useBreakPoint";
-import { SelectElementsPerPage } from "../../../components/SelectElementsPerPage";
 import { SortBy } from "../../../types/filterProductType";
+import { Loading } from "../../../components/Loading";
+import { SelectElementsPerPage } from "../../../components/SelectElementsPerPage";
 
 export const AllCategories: React.FC = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<

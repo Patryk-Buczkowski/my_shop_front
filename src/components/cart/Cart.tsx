@@ -1,11 +1,11 @@
-import { ButtonMinus } from "../ButtonMinus/ButtonMinus";
-import { ButtonPlus } from "../ButtonPlus/ButtonPlus";
 import { useCartStore } from "../../zustand/useCartStore";
 import { Pencil, Trash2 } from "lucide-react";
 import { KeyboardEvent, useState } from "react";
 import { DeliveryAdress } from "../../types/deliveryAdress";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import { ButtonMinus } from "../ButtonMinus";
+import { ButtonPlus } from "../ButtonPlus";
 
 export const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
