@@ -4,8 +4,8 @@ import { KeyboardEvent, useState } from "react";
 import { DeliveryAdress } from "../../types/deliveryAdress";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { ButtonMinus } from "../ButtonMinus";
-import { ButtonPlus } from "../ButtonPlus";
+import { ButtonMinus } from "../buttonMinus";
+import { ButtonPlus } from "../buttonPlus";
 
 export const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
