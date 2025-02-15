@@ -136,7 +136,7 @@ export const Cart: React.FC = () => {
         </Formik>
       )}
 
-      <div>
+      {cart.length !== 0 && <div>
         {cart.map((product) => (
           <div key={product.id} className="flex justify-between mb-1.5">
             <div className="relative h-fit">
@@ -156,9 +156,9 @@ export const Cart: React.FC = () => {
             <div className="max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
               <p>{product.title}</p>
               <p>{product.description}</p>
-              <p> avg Rate: {product.averageRate.toFixed(2)}</p>
+              <p> avg Rate: {product.averageRate.toFixed(2) ?? "N/A"}</p>
               <span className="flex justify-between">
-                <p className="font-bold">{`$${(product.price * product.amount).toFixed(2)}`}</p>
+                <p className="font-bold">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
 
                 <span className="flex justify-between min-w-[35%] max-w-[40%]">
                   <ButtonPlus product={product} add={addToCart} />
@@ -169,9 +169,9 @@ export const Cart: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
-      <p>{`Total sum $${totalSum}`}</p>
+      {cart.length !== 0 ? <p>{`Total sum $${totalSum}`}</p> : <p>0</p>}
     </div>
   );
 };
