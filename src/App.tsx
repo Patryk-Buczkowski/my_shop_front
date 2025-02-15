@@ -2,8 +2,8 @@ import "./App.css";
 import { AllCategories } from "./pages/allCategoriesPage/allCategories/AllCategories.tsx";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/homePage/Home";
-import { Cart } from "./components/Cart";
-import { Layout } from "./components/Layout";
+import { Cart } from "./components/cart/index.ts";
+import { Layout } from "./components/layout/index.ts";
 
 function App() {
     return (
