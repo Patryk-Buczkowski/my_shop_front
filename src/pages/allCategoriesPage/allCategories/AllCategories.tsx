@@ -13,7 +13,7 @@ import {
 } from "../../../zustand/useBreakPoint";
 import { SortBy } from "../../../types/filterProductType";
 import { Loading } from "../../../components/loading";
-import { SelectElementsPerPage } from "../../../components/SelectElementsPerPage";
+import { SelectElementsPerPage } from "../../../components/selectElementsPerPage";
 
 export const AllCategories: React.FC = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<
