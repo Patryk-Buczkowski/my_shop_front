@@ -1,5 +1,4 @@
-FOR NOW MOBILE VERSION WIDTH 320, 640 Px 
--DEMO https://patryk-buczkowski.github.io/my_shop_front/
+Do not finish yet https://patryk-buczkowski.github.io/my_shop_front/
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
