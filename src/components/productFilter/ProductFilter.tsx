@@ -5,10 +5,14 @@ import { useSearchParams } from "react-router-dom";
 import styles from "./ProductFilter.module.scss";
 
 type Props = {
-    setPerPage: React.Dispatch<React.SetStateAction<number>>,
-    setPageNr: React.Dispatch<React.SetStateAction<number>>}
+  setPerPage: React.Dispatch<React.SetStateAction<number>>;
+  setPageNr: React.Dispatch<React.SetStateAction<number>>;
+};
 
-export const ProductFilter: React.FC<Props> = ({setPageNr,setPerPage}) => {
+export const ProductFilter: React.FC<Props> = ({
+  setPageNr,
+  setPerPage,
+}) => {
   const [searchParams, setSearchPrams] = useSearchParams();
   const [visibleCheckbox, setVisibleCheckbox] = useState(false);
   const [openCheckbox, setOpenCheckbox] = useState(false);
@@ -101,7 +105,7 @@ export const ProductFilter: React.FC<Props> = ({setPageNr,setPerPage}) => {
 
     setSearchPrams(newParams);
   }, [maxPrice, minPrice, searchParams, setSearchPrams, titleQuery]);
-  
+
   return (
     <div className=" flex flex-wrap justify-center gap-2">
       <SelectElementsPerPage handlerSelect={handlerSelect} />
