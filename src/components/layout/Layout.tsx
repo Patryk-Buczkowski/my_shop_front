@@ -5,11 +5,11 @@ import { Header } from "../Header";
 export const Layout: React.FC = () => {
   return (
     <div className="w-[100vw]">
-      <header className="w-full z-20 h-[var(--header-height)] font-bold p-2 text-[var(--color-header-nav)]">
+      <header className="w-full z-20 h-[var(--header-height)] font-bold p-1 text-[var(--color-header-nav)]">
         <Header />
       </header>
 
-      <main className="z-10 overflow-auto h-[calc(100vh-90px)]">
+      <main className="z-10 p-1 overflow-auto h-[calc(100vh-(var(--footer-height)+var(--header-height))-10px)]">
         <Outlet />
       </main>
 

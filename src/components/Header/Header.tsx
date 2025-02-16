@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
       <motion.nav
         initial={{ y: "-100%", x: "100%" }}
         animate={{ y: isOpen ? "0%" : "-100%", x: isOpen ? "0%" : "100%" }}
-        transition={{ type: "spring", stiffness: 80, damping: isOpen ? 5 : 15 }}
+        transition={{ type: "spring", stiffness: 90, damping: isOpen ? 5 : 15 }}
         className="absolute z-20 top-0 left-0 right-0 bottom-0 bg-[var(--color-secondary)] text-white p-4 flex flex-col gap-3"
       >
         <div
