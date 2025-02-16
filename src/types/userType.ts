@@ -17,4 +17,5 @@ export type UserType = {
   verified: boolean;
   tokenCreatedAt?: Date | null;
   tokenExpiration?: Date | null;
+  imgLink?: string
 };

@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -24,13 +25,15 @@ const Home: React.FC = () => {
 
       <p className="mb-2">If not :</p>
 
-      <Button
-        sx={{ borderRadius: "100%", width: "100%" }}
-        variant="contained"
-        size="large"
-      >
-        Register
-      </Button>
+      <Link to="/register">
+        <Button
+          sx={{ borderRadius: "100%", width: "100%" }}
+          variant="contained"
+          size="large"
+        >
+          Register
+        </Button>
+      </Link>
     </div>
   );
 };
