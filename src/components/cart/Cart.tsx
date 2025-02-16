@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { ButtonMinus } from "../buttonMinus";
 import { ButtonPlus } from "../buttonPlus";
 
-export const Cart: React.FC = () => {
+const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
     useCartStore();
   const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
@@ -175,3 +175,5 @@ export const Cart: React.FC = () => {
     </div>
   );
 };
+
+export default Cart;

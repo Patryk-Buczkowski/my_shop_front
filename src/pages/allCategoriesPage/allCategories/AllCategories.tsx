@@ -14,7 +14,7 @@ import {
 import { Loading } from "../../../components/loading";
 import { ProductFilter } from "../../../components/productFilter/ProductFilter";
 
-export const AllCategories: React.FC = () => {
+const AllCategories: React.FC = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<
     ProductType[]
   >([]);
@@ -124,3 +124,5 @@ export const AllCategories: React.FC = () => {
     </div>
   );
 };
+
+export default AllCategories;

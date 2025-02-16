@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <div className="w-full">
       <h1 className="mb-2 text-center">Welcome to</h1>
@@ -34,3 +34,5 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+
+export default Home;
