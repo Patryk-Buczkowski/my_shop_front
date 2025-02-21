@@ -8,7 +8,9 @@ const Cart = React.lazy(() => import("./components/cart/Cart.tsx"));
 const AllCategories = React.lazy(
   () => import("./pages/allCategoriesPage/allCategories/AllCategories.tsx")
 );
-const Register = React.lazy(() => import("./pages/registerPage/Register.tsx"));
+const Register = React.lazy(
+  () => import("./pages/registerPage/register/Register.tsx")
+);
 
 function App() {
   return (

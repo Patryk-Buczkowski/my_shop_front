@@ -1,0 +1,1 @@
+export { RegisterInputs } from "./RegisterInputs";
