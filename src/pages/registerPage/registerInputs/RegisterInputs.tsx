@@ -1,3 +1,4 @@
+import React from "react";
 import { CountryType } from "../../../types/countryType";
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
     password: string;
     country: CountryType;
   };
+  errorPassword: boolean;
   handleRegister: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -30,6 +32,7 @@ type Props = {
 export const RegisterInputs: React.FC<Props> = ({
   inputs,
   formData,
+  errorPassword,
   handleRegister,
   handleFileChange,
 }) => {
@@ -59,28 +62,34 @@ export const RegisterInputs: React.FC<Props> = ({
           );
         } else {
           return (
-            <input
-              key={input.name}
-              placeholder={input.name}
-              onChange={
-                input.type === "file" ? handleFileChange : handleRegister
-              }
-              value={
-                input.type === "file"
-                  ? undefined
-                  : (formData[input.name as keyof typeof formData] as
-                      | string
-                      | number
-                      | readonly string[]
-                      | undefined)
-              }
-              type={input.type}
-              min={input.type === "number" ? 18 : undefined}
-              max={input.type === "number" ? 120 : undefined}
-              name={input.name}
-              accept={input.type === "file" ? "image/*" : undefined}
-              className="mb-1 p-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]"
-            />
+            <React.Fragment key={input.name}>
+              <input
+                placeholder={input.name}
+                onChange={
+                  input.type === "file" ? handleFileChange : handleRegister
+                }
+                value={
+                  input.type === "file"
+                    ? undefined
+                    : (formData[input.name as keyof typeof formData] as
+                        | string
+                        | number
+                        | readonly string[]
+                        | undefined)
+                }
+                type={input.type}
+                min={input.type === "number" ? 18 : undefined}
+                max={input.type === "number" ? 120 : undefined}
+                name={input.name}
+                accept={input.type === "file" ? "image/*" : undefined}
+                className={`mb-1 p-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]
+                ${(input.name === "password" || input.name === "re-password") && errorPassword && "border-red-600"}`}
+              />
+              {errorPassword &&
+                (input.name === "password" || input.name === "re-password") && (
+                  <p className="text-red">Passwords do not match</p>
+                )}
+            </React.Fragment>
           );
         }
       })}

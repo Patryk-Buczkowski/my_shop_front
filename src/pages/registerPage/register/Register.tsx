@@ -16,6 +16,7 @@ const Register: React.FC = () => {
     { name: "age", type: "number" },
     { name: "email", type: "text" },
     { name: "password", type: "text" },
+    { name: "re-password", type: "text" },
   ];
   const [formData, setFormData] = useState({
     imgLink: null as File | null,
@@ -23,8 +24,10 @@ const Register: React.FC = () => {
     age: "",
     email: "",
     password: "",
+    're-password': undefined,
     country: "PL" as CountryType,
   });
+  const [errorPassword, setErrorPassword] = useState(false);
 
   const handleRegister = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -43,6 +46,10 @@ const Register: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    if (formData.password !== formData["re-password"]) {
+      setErrorPassword(true);
+      return;
+    }
     const formDataToSend = new FormData();
     const backend = import.meta.env.VITE_BACKEND_URL;
 
@@ -84,6 +91,7 @@ const Register: React.FC = () => {
       />
 
       <RegisterInputs
+        errorPassword={errorPassword}
         formData={formData}
         inputs={inputs}
         handleFileChange={handleFileChange}
