@@ -57,11 +57,12 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${backend}/addUser`, formDataToSend, {
+      const response = await axios.post(`${backend}/addUser`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
       console.log(response.data);
     } catch (error) {
       console.error("Błąd przy wysyłaniu formularza:", error);
