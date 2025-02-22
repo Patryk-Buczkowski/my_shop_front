@@ -57,7 +57,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${backend}/upload`, formDataToSend, {
+      const response = await axios.post(`${backend}/addUser`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
