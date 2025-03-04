@@ -1,20 +1,20 @@
 import { CirclePower, Menu } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
-type LinkType = {
-  link: string;
-  name: string;
-};
+import { mobileMenuLinks } from "../../data/mobileMenuLinks";
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const links: LinkType[] = [
-    { link: "/home", name: "🏡 Home" },
-    { link: "/cart", name: "🛒 Cart" },
-    { link: "/all_categories", name: "📂 All Categories" },
-  ];
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isOpen]);
 
   return (
     <>
@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          {links.map((link) => (
+          {mobileMenuLinks.map((link) => (
             <Link
               key={link.link}
               onClick={() => setIsOpen(false)}

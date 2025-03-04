@@ -23,6 +23,7 @@ type Props = {
     country: CountryType;
   };
   errorPassword: boolean;
+  handleBlur: () => void;
   handleRegister: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -35,9 +36,10 @@ export const RegisterInputs: React.FC<Props> = ({
   errorPassword,
   handleRegister,
   handleFileChange,
+  handleBlur,
 }) => {
   return (
-    <div className="flex mb-2 flex-col">
+    <div className="flex w-51 m-auto mb-8 flex-col">
       {inputs.map((input) => {
         if (input.type === "select") {
           return (
@@ -78,9 +80,13 @@ export const RegisterInputs: React.FC<Props> = ({
                         | undefined)
                 }
                 type={input.type}
+                onBlur={input.type === "password" ? handleBlur : undefined}
                 min={input.type === "number" ? 18 : undefined}
                 max={input.type === "number" ? 120 : undefined}
                 name={input.name}
+                autoComplete={
+                  input.type === "password" ? "new-password" : "off"
+                }
                 accept={input.type === "file" ? "image/*" : undefined}
                 className={`mb-1 p-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]
                 ${(input.name === "password" || input.name === "re-password") && errorPassword && "border-red-600"}`}

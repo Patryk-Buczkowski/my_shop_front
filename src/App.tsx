@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/layout/index.ts";
 import React, { Suspense } from "react";
 
+const LogIn = React.lazy(() => import("./pages/loginPage/Login.tsx"))
 const Home = React.lazy(() => import("./pages/homePage/Home/Home.tsx"));
 const Cart = React.lazy(() => import("./components/cart/Cart.tsx"));
 const AllCategories = React.lazy(
@@ -10,6 +11,9 @@ const AllCategories = React.lazy(
 );
 const Register = React.lazy(
   () => import("./pages/registerPage/register/Register.tsx")
+);
+const RegisterResult = React.lazy(
+  () => import("./pages/registerPage/registerResult/RegisterResult.tsx")
 );
 
 function App() {
@@ -24,6 +28,8 @@ function App() {
               <Route path="all_categories" element={<AllCategories />} />
               <Route path="cart" element={<Cart />} />
               <Route path="register" element={<Register />} />
+              <Route path="registrationResult" element={<RegisterResult />} />
+              <Route path="login" element={<LogIn />} />              
             </Route>
           </Routes>
         </Suspense>

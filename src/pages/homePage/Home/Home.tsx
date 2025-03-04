@@ -15,13 +15,15 @@ const Home: React.FC = () => {
 
       <p className="mb-2">If You are registered :</p>
 
-      <Button
-        sx={{ borderRadius: "100%", width: "100%" }}
-        variant="contained"
-        size="large"
-      >
-        Log in
-      </Button>
+      <Link to={"/login"}>
+        <Button
+          sx={{ borderRadius: "100%", width: "100%" }}
+          variant="contained"
+          size="large"
+        >
+          Log in
+        </Button>
+      </Link>
 
       <p className="mb-2">If not :</p>
 

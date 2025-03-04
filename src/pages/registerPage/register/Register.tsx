@@ -1,33 +1,23 @@
 import { useState } from "react";
-import { countryObj, CountryType } from "../../../types/countryType";
+import { CountryType } from "../../../types/countryType";
 import Button from "@mui/material/Button/Button";
 import { RegisterInputs } from "../registerInputs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { regsterFormInputs } from "../../../data/registerFormInputs";
 
 const Register: React.FC = () => {
-  const inputs = [
-    { name: "imgLink", type: "file" },
-    {
-      name: "country",
-      type: "select",
-      options: Object.keys(countryObj) as CountryType[],
-    },
-    { name: "name", type: "text" },
-    { name: "age", type: "number" },
-    { name: "email", type: "text" },
-    { name: "password", type: "text" },
-    { name: "re-password", type: "text" },
-  ];
   const [formData, setFormData] = useState({
     imgLink: null as File | null,
     name: "",
     age: "",
     email: "",
     password: "",
-    're-password': undefined,
+    "re-password": "",
     country: "PL" as CountryType,
   });
   const [errorPassword, setErrorPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegister = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,10 +59,22 @@ const Register: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
       console.log(response.data);
+
+      if (response.status === 201) {
+        navigate('/registrationResult?success=true')
+      } 
     } catch (error) {
       console.error("Błąd przy wysyłaniu formularza:", error);
+      navigate('/registrationResult?success=false')
+    }
+  };
+
+  const handleBlur = () => {
+    if (formData.password !== formData["re-password"]) {
+      setErrorPassword(true);
+    } else {
+      setErrorPassword(false);
     }
   };
 
@@ -90,22 +92,30 @@ const Register: React.FC = () => {
         alt="add Photo"
       />
 
-      <RegisterInputs
-        errorPassword={errorPassword}
-        formData={formData}
-        inputs={inputs}
-        handleFileChange={handleFileChange}
-        handleRegister={handleRegister}
-      />
-
-      <Button
-        onClick={handleSubmit}
-        sx={{ borderRadius: "100%", width: "100%" }}
-        variant="contained"
-        size="large"
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
       >
-        Create Profile
-      </Button>
+        <RegisterInputs
+          handleBlur={handleBlur}
+          errorPassword={errorPassword}
+          formData={formData}
+          inputs={regsterFormInputs}
+          handleFileChange={handleFileChange}
+          handleRegister={handleRegister}
+        />
+
+        <Button
+          sx={{ borderRadius: "100%", width: "100%", marginBottom: '20px' }}
+          variant="contained"
+          size="large"
+          type="submit"
+        >
+          Create Profile
+        </Button>
+      </form>
     </div>
   );
 };
