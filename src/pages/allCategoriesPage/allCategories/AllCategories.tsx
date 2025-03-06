@@ -31,13 +31,15 @@ const AllCategories: React.FC = () => {
 
   useBreakpointListener();
 
+  const BACKEND = import.meta.env.VITE_BACKEND_URL;
+
   // get Products
   useEffect(() => {
     const Products = async () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `https://my-shop-backend-h9rp.onrender.com/my_shop_api/filterProduct?${searchParams.toString()}`
+          `${BACKEND}?${searchParams.toString()}`
         );
         if (response.data) {
           setSelectedCategoryProducts(response.data);
