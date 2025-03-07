@@ -4,7 +4,6 @@ import styles from "./AllCategories.module.scss";
 import { useSearchParams } from "react-router-dom";
 import { ProductType } from "../../../types/productType";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { AllCategoriesProduct } from "../allCategoriesProduct";
 import {
@@ -13,6 +12,7 @@ import {
 } from "../../../zustand/useBreakPoint";
 import { Loading } from "../../../components/loading";
 import { ProductFilter } from "../../../components/productFilter/ProductFilter";
+import { api } from "../../../axiosConfig";
 
 const AllCategories: React.FC = () => {
   const [selectedCategoryProducts, setSelectedCategoryProducts] = useState<
@@ -38,7 +38,7 @@ const AllCategories: React.FC = () => {
     const Products = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(
+        const response = await api.get(
           `${BACKEND}?${searchParams.toString()}`
         );
         if (response.data) {

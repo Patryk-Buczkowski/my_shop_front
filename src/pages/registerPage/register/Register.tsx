@@ -2,9 +2,9 @@ import { useState } from "react";
 import { CountryType } from "../../../types/countryType";
 import Button from "@mui/material/Button/Button";
 import { RegisterInputs } from "../registerInputs";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { regsterFormInputs } from "../../../data/registerFormInputs";
+import { api } from "../../../axiosConfig";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(`${backend}/addUser`, formData, {
+      const response = await api.post(`${backend}/addUser`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
