@@ -39,7 +39,7 @@ const AllCategories: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await api.get(
-          `${BACKEND}?${searchParams.toString()}`
+          `${BACKEND}/filterProduct?${searchParams.toString()}`
         );
         if (response.data) {
           setSelectedCategoryProducts(response.data);
