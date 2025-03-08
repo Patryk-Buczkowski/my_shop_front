@@ -1,15 +1,18 @@
 import React from "react";
 import { ProductType } from "../../../types/productType";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   product: ProductType;
 };
 
 export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
+  const navigate = useNavigate();
   return (
     <div
       onClick={() => {
         console.log("to dupa");
+        navigate('/details', {state: product})
       }}
       className="w-28 sm:w-35 border-2 border-[var(--color-primary-light)] rounded-lg mb-2 active:border-[var(--color-primary)]"
     >

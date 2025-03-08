@@ -1,7 +1,16 @@
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    const logged = localStorage.getItem("logged");
+
+    setIsLogged(logged === 'true' ? true : false)
+  }, []);
+
   return (
     <div className="w-full">
       <h1 className="mb-2 text-center">Welcome to</h1>
@@ -20,8 +29,9 @@ const Home: React.FC = () => {
           sx={{ borderRadius: "100%", width: "100%" }}
           variant="contained"
           size="large"
+          disabled={isLogged}
         >
-          Log in
+          {isLogged ? 'You are logged' : 'Log in'}
         </Button>
       </Link>
 
@@ -32,6 +42,7 @@ const Home: React.FC = () => {
           sx={{ borderRadius: "100%", width: "100%" }}
           variant="contained"
           size="large"
+          disabled={isLogged}
         >
           Register
         </Button>

@@ -2,6 +2,7 @@ import "./App.css";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/layout/index.ts";
 import React, { Suspense } from "react";
+import { Details } from "./pages/detailsPage/Details.tsx";
 
 const LogIn = React.lazy(() => import("./pages/loginPage/Login.tsx"))
 const Home = React.lazy(() => import("./pages/homePage/Home/Home.tsx"));
@@ -29,7 +30,8 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="register" element={<Register />} />
               <Route path="registrationResult" element={<RegisterResult />} />
-              <Route path="login" element={<LogIn />} />              
+              <Route path="login" element={<LogIn />} />
+              <Route path="details" element={<Details />} />            
             </Route>
           </Routes>
         </Suspense>

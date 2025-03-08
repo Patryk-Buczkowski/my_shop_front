@@ -118,7 +118,7 @@ const AllCategories: React.FC = () => {
           {visibleProducts.map((product, index) => (
             <AllCategoriesProduct
               product={product}
-              key={product.id ? product.id : index}
+              key={product._id ? product._id : index}
             />
           ))}
         </div>

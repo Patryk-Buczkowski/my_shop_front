@@ -21,16 +21,15 @@ const LogIn: React.FC = () => {
       setLoginStatus("pending");
 
       try {
-        const login = await api.post(`${BACKEND}/login`, {
+        await api.post(`${BACKEND}/login`, {
           email: values.email,
           password: values.password,
         });
-        console.log("login", login.data);
-        console.table(values);
         setLoginStatus("success");
+        localStorage.setItem("logged", "true");
         formik.resetForm();
         setTimeout(() => {
-          navigate('/all_categories')
+          navigate("/all_categories");
         }, 1500);
       } catch (error) {
         setLoginStatus("error");
@@ -62,7 +61,7 @@ const LogIn: React.FC = () => {
             <label className="mb-2 flex justify-between">
               Email:
               <input
-                className="border-1 border-amber-400 rounded-lg ml-1"
+                className="border-1 p-1 border-amber-400 rounded-lg ml-1"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -77,7 +76,7 @@ const LogIn: React.FC = () => {
             <label className="mb-2 flex justify-between">
               Password:
               <input
-                className="border-1 border-amber-400 rounded-lg ml-1"
+                className="border-1 border-amber-400 rounded-lg ml-1 p-1"
                 type="password"
                 name="password"
                 autoComplete="current-password"

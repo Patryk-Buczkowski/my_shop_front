@@ -11,7 +11,9 @@ const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
     useCartStore();
   const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
-    null
+    localStorage.getItem("deliveryAddress")
+      ? JSON.parse(localStorage.getItem("deliveryAddress") || '{}')
+      : null
   );
   const [isEdited, setIsEdited] = useState(false);
   const formInputs: (keyof DeliveryAdress)[] = [
@@ -21,6 +23,8 @@ const Cart: React.FC = () => {
     "voivodeship",
     "zip_code",
   ];
+
+  console.log("cart", cart);
 
   const validationSchema = Yup.object({
     country: Yup.string().required("Country is required"),
@@ -38,6 +42,11 @@ const Cart: React.FC = () => {
       resetForm();
       setIsEdited(false);
     }
+  };
+
+  const handlerSetAddress = (values: DeliveryAdress) => {
+    console.log(values);
+    localStorage.setItem("deliveryAddress", JSON.stringify(values));
   };
 
   return (
@@ -119,7 +128,7 @@ const Cart: React.FC = () => {
               <button
                 className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)] select-none active:text-[var(--color-primary-light)]"
                 type="submit"
-                onClick={() => console.log(deliveryAdress)}
+                onClick={() => handlerSetAddress(values)}
               >
                 Save Address ✅
               </button>
@@ -136,42 +145,48 @@ const Cart: React.FC = () => {
         </Formik>
       )}
 
-      {cart.length !== 0 && <div>
-        {cart.map((product) => (
-          <div key={product.id} className="flex justify-between mb-1.5">
-            <div className="relative h-fit">
-              <img
-                className="relative w-[85px] h-[85px]"
-                src={product.pictureUrl}
-                alt="product image"
-              />
-              <div
-                onClick={() => removeFromCart(product.id)}
-                className="absolute w-5.5 h-5.5 rounded-full bottom-2 left-1 bg-white flex justify-center items-center"
-              >
-                <Trash2 size={13} color="red" />
+      {!!cart.length && (
+        <div>
+          {cart.map((product) => (
+            <div key={product._id} className="flex justify-between mb-1.5">
+              <div className="relative h-fit">
+                <img
+                  className="relative w-[85px] h-[85px]"
+                  src={product.pictureUrl}
+                  alt="product image"
+                />
+                <div
+                  onClick={() => removeFromCart(product._id)}
+                  className="absolute w-5.5 h-5.5 rounded-full bottom-2 left-1 bg-white flex justify-center items-center"
+                >
+                  <Trash2 size={13} color="red" />
+                </div>
+              </div>
+
+              <div className="max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
+                <p>Title: {product.title}</p>
+                <p>Description: {product.description}</p>
+                <p> avg Rate: {product.averageRate.toFixed(2) ?? "N/A"}</p>
+                <span className="flex justify-between">
+                  <p className="font-bold">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
+
+                  <span className="flex justify-between min-w-[35%] max-w-[40%]">
+                    <ButtonPlus product={product} add={addToCart} />
+                    <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)]">{`${product.amount}`}</p>
+                    <ButtonMinus product={product} subtract={decreaseAmount} />
+                  </span>
+                </span>
               </div>
             </div>
+          ))}
+        </div>
+      )}
 
-            <div className="max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
-              <p>{product.title}</p>
-              <p>{product.description}</p>
-              <p> avg Rate: {product.averageRate.toFixed(2) ?? "N/A"}</p>
-              <span className="flex justify-between">
-                <p className="font-bold">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
-
-                <span className="flex justify-between min-w-[35%] max-w-[40%]">
-                  <ButtonPlus product={product} add={addToCart} />
-                  <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)]">{`${product.amount}`}</p>
-                  <ButtonMinus product={product} subtract={decreaseAmount} />
-                </span>
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>}
-
-      {cart.length !== 0 ? <p>{`Total sum $${totalSum}`}</p> : <p>0</p>}
+      {cart.length !== 0 ? (
+        <p>{`Total sum $${totalSum.toFixed(2)}`}</p>
+      ) : (
+        <p>Cart is empty</p>
+      )}
     </div>
   );
 };
