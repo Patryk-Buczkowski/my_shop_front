@@ -54,7 +54,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await api.post(`${backend}/addUser`, formData, {
+      const response = await api.post(`${backend}/addUser`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
