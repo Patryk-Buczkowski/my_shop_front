@@ -1,4 +1,3 @@
-
 export type ProductType = {
   _id: string;
   title: string;
@@ -42,11 +41,14 @@ export const categories = [
   "other",
 ] as const;
 
-export type CategoryType = typeof categories[number];
-
+export type CategoryType = (typeof categories)[number];
 
 export type CommentType = {
+  _id: string;
   comment: string;
-  userId: string;
+  userId: {
+    _id: string;
+    name: string;
+  };
   productId: string;
 };
