@@ -23,12 +23,12 @@ export const useCartStore = create<CartStore>((set) => ({
 
   addToCart: (item) =>
     set((state) => {
-      const existingItem = state.cart.find((product) => product.id === item.id);
+      const existingItem = state.cart.find((product) => product._id === item._id);
 
       let updatedCart;
       if (existingItem) {
         updatedCart = state.cart.map((product) =>
-          product.id === item.id
+          product._id === item._id
             ? { ...product, amount: product.amount + 1 }
             : product
         );
@@ -42,7 +42,7 @@ export const useCartStore = create<CartStore>((set) => ({
 
   removeFromCart: (id) =>
     set((state) => {
-      const updatedCart = state.cart.filter((product) => product.id !== id);
+      const updatedCart = state.cart.filter((product) => product._id !== id);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return { cart: updatedCart, totalSum: calculateTotalSum(JSON.parse(localStorage.getItem("cart") || "[]")) };
     }),
@@ -50,7 +50,7 @@ export const useCartStore = create<CartStore>((set) => ({
   increaseAmount: (id) =>
     set((state) => {
       const updatedCart = state.cart.map((product) =>
-        product.id === id ? { ...product, amount: product.amount + 1 } : product
+        product._id === id ? { ...product, amount: product.amount + 1 } : product
       );
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -61,7 +61,7 @@ export const useCartStore = create<CartStore>((set) => ({
     set((state) => {
       const updatedCart = state.cart
         .map((product) =>
-          product.id === id
+          product._id === id
             ? { ...product, amount: product.amount - 1 }
             : product
         )
