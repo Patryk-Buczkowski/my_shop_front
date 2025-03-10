@@ -12,7 +12,7 @@ const Cart: React.FC = () => {
     useCartStore();
   const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
     localStorage.getItem("deliveryAddress")
-      ? JSON.parse(localStorage.getItem("deliveryAddress") || '{}')
+      ? JSON.parse(localStorage.getItem("deliveryAddress") || "{}")
       : null
   );
   const [isEdited, setIsEdited] = useState(false);
@@ -54,29 +54,51 @@ const Cart: React.FC = () => {
       <h3 className="font-bold select-none tracking-wider">Cart</h3>
 
       {!isEdited && (
-        <div className="flex justify-between max-w-[300px] pb-3 items-end">
-          <span>
-            {deliveryAdress === null ? (
-              <p className="select-none">Add delivery address :</p>
-            ) : (
-              <>
-                <h4>Delivery address</h4>
-                <p>Country: {deliveryAdress.country}</p>
-                <p>City: {deliveryAdress.city}</p>
-                <p>Street & number: {deliveryAdress.street_number}</p>
-                <p>Zip code: {deliveryAdress.zip_code}</p>
-              </>
-            )}
-          </span>
+        <div className="flex flex-col mb-3 items-center border border-gray-300 rounded-xl p-4 shadow-md bg-[var(--color-secondary)] max-w-[350px] mx-auto">
+          <div className="flex justify-between w-full items-end gap-2">
+            <div className="text-gray-700">
+              {deliveryAdress === null ? (
+                <p className="select-none text-sm text-gray-500">
+                  Add delivery address :
+                </p>
+              ) : (
+                <div className="space-y-1">
+                  <h4 className="text-lg font-semibold text-gray-800">
+                    Delivery address
+                  </h4>
+                  <p className="text-sm">
+                    Country:{" "}
+                    <span className="font-medium">
+                      {deliveryAdress.country}
+                    </span>
+                  </p>
+                  <p className="text-sm">
+                    City:{" "}
+                    <span className="font-medium">{deliveryAdress.city}</span>
+                  </p>
+                  <p className="text-sm">
+                    Street & number:{" "}
+                    <span className="font-medium">
+                      {deliveryAdress.street_number}
+                    </span>
+                  </p>
+                  <p className="text-sm">
+                    Zip code:{" "}
+                    <span className="font-medium">
+                      {deliveryAdress.zip_code}
+                    </span>
+                  </p>
+                </div>
+              )}
+            </div>
 
-          <div
-            className="flex items-center gap-2"
-            onClick={() => setIsEdited(true)}
-          >
-            <Pencil size={14} />
-            <span className="font-extrabold tracking-wider text-lg text-[var(--color-secondary)]">
-              Edit
-            </span>
+            <button
+              className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-[var(--color-secondary)]"
+              onClick={() => setIsEdited(true)}
+            >
+              <Pencil size={16} className="text-gray-600" />
+              <span className="font-bold tracking-wide text-sm">Edit</span>
+            </button>
           </div>
         </div>
       )}
@@ -148,7 +170,10 @@ const Cart: React.FC = () => {
       {!!cart.length && (
         <div>
           {cart.map((product) => (
-            <div key={product._id} className="flex justify-between mb-1.5">
+            <div
+              key={product._id}
+              className="flex m-auto max-w-[500px] justify-between mb-3"
+            >
               <div className="relative h-fit">
                 <img
                   className="relative w-[85px] h-[85px]"
@@ -163,16 +188,42 @@ const Cart: React.FC = () => {
                 </div>
               </div>
 
-              <div className="max-w-[210px] flex pl-2 flex-col gap-1 text-sm font-light">
-                <p>Title: {product.title}</p>
-                <p>Description: {product.description}</p>
-                <p> avg Rate: {product.averageRate.toFixed(2) ?? "N/A"}</p>
-                <span className="flex justify-between">
-                  <p className="font-bold">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
+              <div className="w-[70%] min-w-[200px] flex flex-col gap-2 p-3 rounded-lg border border-[var(--color-secondary)] shadow-md text-sm font-light bg-[var(--bgColor)]">
+                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
+                  <p className="text-[var(--color-secondary)] font-semibold">
+                    Title:
+                  </p>
+                  <p className="text-[var(--color-primary-light)]">
+                    {product.title}
+                  </p>
+                </span>
 
-                  <span className="flex justify-between min-w-[35%] max-w-[40%]">
+                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
+                  <p className="text-[var(--color-secondary)] font-semibold">
+                    Description:
+                  </p>
+                  <p className="text-[var(--color-primary-light)]">
+                    {product.description}
+                  </p>
+                </span>
+
+                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
+                  <p className="text-[var(--color-secondary)] font-semibold">
+                    avg Rate:
+                  </p>
+                  <p className="text-[var(--color-primary-light)]">
+                    {product.averageRate.toFixed(2) ?? "N/A"}
+                  </p>
+                </span>
+
+                <span className="flex justify-between items-center mt-2">
+                  <p className="text-lg font-bold text-[var(--color-primary)]">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
+
+                  <span className="flex justify-between items-center gap-2 min-w-[35%] max-w-[40%]">
                     <ButtonPlus product={product} add={addToCart} />
-                    <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-5 text-center items-center bg-[var(--color-primary-light)]">{`${product.amount}`}</p>
+                    <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-6 text-center bg-[var(--color-primary-light)] shadow-sm">
+                      {`${product.amount}`}
+                    </p>
                     <ButtonMinus product={product} subtract={decreaseAmount} />
                   </span>
                 </span>

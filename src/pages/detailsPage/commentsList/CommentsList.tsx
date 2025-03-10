@@ -7,7 +7,7 @@ type Props = {
 
 export const CommentsList: React.FC<Props> = ({ comments }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2.5">
       {comments.map((comment, index) => {
         return <Comment key={index} comment={comment} />;
       })}
