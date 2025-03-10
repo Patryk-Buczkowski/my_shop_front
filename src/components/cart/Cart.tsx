@@ -6,10 +6,12 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { ButtonMinus } from "../buttonMinus";
 import { ButtonPlus } from "../buttonPlus";
+import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC = () => {
   const { cart, totalSum, addToCart, decreaseAmount, removeFromCart } =
     useCartStore();
+  const navigate = useNavigate();
   const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
     localStorage.getItem("deliveryAddress")
       ? JSON.parse(localStorage.getItem("deliveryAddress") || "{}")
@@ -174,7 +176,12 @@ const Cart: React.FC = () => {
               key={product._id}
               className="flex m-auto max-w-[500px] justify-between mb-3"
             >
-              <div className="relative h-fit">
+              <div
+                onClick={() => {
+                  navigate("/details", { state: product });
+                }}
+                className="relative h-fit"
+              >
                 <img
                   className="relative w-[85px] h-[85px]"
                   src={product.pictureUrl}
@@ -234,7 +241,7 @@ const Cart: React.FC = () => {
       )}
 
       {cart.length !== 0 ? (
-        <p>{`Total sum $${totalSum.toFixed(2)}`}</p>
+        <p className="m-auto rounded-2xl text-[var(--color-secondary)] font-semibold p-2 text-center bg-[var(--color-primary-light)] shadow-sm">{`Total sum $${totalSum.toFixed(2)}`}</p>
       ) : (
         <p>Cart is empty</p>
       )}

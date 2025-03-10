@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ProductType } from "../../../types/productType";
 import styles from "./Details.module.scss";
 import { Button, Pagination } from "@mui/material";
@@ -14,6 +14,7 @@ import {
 export const Details: React.FC = () => {
   const location = useLocation();
   const product = location.state as ProductType;
+  const navigate = useNavigate();
 
   const PER_PAGE = 5;
   const { addToCart, cart } = useStore(useCartStore);
@@ -93,11 +94,16 @@ export const Details: React.FC = () => {
             marginBottom: "1.25rem",
           }}
           variant="contained"
-          disabled={inCart}
           size="large"
-          onClick={() => addToCart(product)}
+          onClick={
+            inCart
+              ? () => {
+                  navigate("/cart");
+                }
+              : () => addToCart(product)
+          }
         >
-          {inCart ? 'Added to cart' : 'Add to cart'}
+          {inCart ? "Go to cart" : "Add to cart"}
         </Button>
 
         <div className="m-auto w-full flex justify-center mb-5">
