@@ -4,7 +4,8 @@ import Button from "@mui/material/Button/Button";
 import { RegisterInputs } from "../registerInputs";
 import { useNavigate } from "react-router-dom";
 import { regsterFormInputs } from "../../../data/registerFormInputs";
-import { api } from "../../../axiosConfig";
+// import { api } from "../../../axiosConfig";
+import axios from "axios";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +42,6 @@ const Register: React.FC = () => {
       return;
     }
     const formDataToSend = new FormData();
-    const backend = import.meta.env.VITE_BACKEND_URL;
 
     formDataToSend.append("name", formData.name);
     formDataToSend.append("age", formData.age);
@@ -54,19 +54,23 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await api.post(`${backend}/addUser`, formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `http://localhost:3000/my_shop_api/addUser`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log(response.data);
 
       if (response.status === 201) {
-        navigate('/registrationResult?success=true')
-      } 
+        navigate("/registrationResult?success=true");
+      }
     } catch (error) {
       console.error("Błąd przy wysyłaniu formularza:", error);
-      navigate('/registrationResult?success=false')
+      navigate("/registrationResult?success=false");
     }
   };
 
@@ -108,7 +112,7 @@ const Register: React.FC = () => {
         />
 
         <Button
-          sx={{ borderRadius: "100%", width: "100%", marginBottom: '20px' }}
+          sx={{ borderRadius: "100%", width: "100%", marginBottom: "20px" }}
           variant="contained"
           size="large"
           type="submit"

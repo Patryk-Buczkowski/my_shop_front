@@ -21,11 +21,12 @@ const LogIn: React.FC = () => {
       setLoginStatus("pending");
 
       try {
-        await api.post(`${BACKEND}/login`, {
+        const user = await api.post(`${BACKEND}/login`, {
           email: values.email,
           password: values.password,
         });
         setLoginStatus("success");
+        localStorage.setItem("user", JSON.stringify(user.data));
         localStorage.setItem("logged", "true");
         formik.resetForm();
         setTimeout(() => {

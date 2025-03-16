@@ -106,38 +106,44 @@ export const Details: React.FC = () => {
           {inCart ? "Go to cart" : "Add to cart"}
         </Button>
 
-        <div className="m-auto w-full flex justify-center mb-5">
-          <Pagination
-            size={(isDesktop && "large") || (isTablet && "medium") || "small"}
-            key={pageNr}
-            count={Math.ceil(product.commentsList.length / PER_PAGE)}
-            defaultPage={pageNr}
-            page={pageNr}
-            siblingCount={
-              (isWideScreen && 4) || (isDesktop && 3) || (isTablet && 2) || 1
-            }
-            boundaryCount={isTablet ? 2 : 0}
-            variant="outlined"
-            className="mb-3 self-center"
-            sx={{
-              "& .MuiPaginationItem-root": {
-                color: "var(--color-secondary)",
-                borderColor: "var(--buttonTextColor)",
-              },
-              "& .MuiPaginationItem-page.Mui-selected": {
-                backgroundColor: "var(--color-primary-light)",
-                color: "var(--color-secondary)",
-              },
-            }}
-            onChange={(_event, page) => setPageNr(page)}
-          />
-        </div>
-
-        <div className="w-full max-w-100 m-auto">
-          {product.comments.length !== 0 && (
-            <CommentsList comments={visibleComments} />
-          )}
-        </div>
+        {product.comments.length !== 0 && (
+          <>
+            <div className="m-auto w-full flex justify-center mb-5">
+              <Pagination
+                size={
+                  (isDesktop && "large") || (isTablet && "medium") || "small"
+                }
+                key={pageNr}
+                count={Math.ceil(product.commentsList.length / PER_PAGE)}
+                defaultPage={pageNr}
+                page={pageNr}
+                siblingCount={
+                  (isWideScreen && 4) ||
+                  (isDesktop && 3) ||
+                  (isTablet && 2) ||
+                  1
+                }
+                boundaryCount={isTablet ? 2 : 0}
+                variant="outlined"
+                className="mb-3 self-center"
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color: "var(--color-secondary)",
+                    borderColor: "var(--buttonTextColor)",
+                  },
+                  "& .MuiPaginationItem-page.Mui-selected": {
+                    backgroundColor: "var(--color-primary-light)",
+                    color: "var(--color-secondary)",
+                  },
+                }}
+                onChange={(_event, page) => setPageNr(page)}
+              />
+            </div>
+            <div className="w-full max-w-100 m-auto">
+              <CommentsList comments={visibleComments} />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

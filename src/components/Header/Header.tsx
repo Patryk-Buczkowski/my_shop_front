@@ -3,9 +3,22 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { mobileMenuLinks } from "../../data/mobileMenuLinks";
+import { UserType } from "../../types/userType";
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState<UserType | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  
+  // chceck is logged
+  useEffect(() => {
+    const logged = localStorage.getItem("logged");
+
+    setIsLogged(logged === 'true' ? true : false)
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -16,8 +29,16 @@ export const Header: React.FC = () => {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
+  // get user
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   return (
-    <>
+    <div className="flex justify-between">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
         className="flex gap-2 select-none active:text-[var(--color-primary-light)]"
@@ -25,6 +46,8 @@ export const Header: React.FC = () => {
         <Menu size={25} />
         <p>Open menu</p>
       </div>
+
+      { isLogged && <img className="h-15 rounded-full" src={user?.imgLink} alt="profile image"/>}
 
       <motion.nav
         initial={{ y: "-100%", x: "100%" }}
@@ -65,6 +88,6 @@ export const Header: React.FC = () => {
           alt="logo"
         />
       </motion.nav>
-    </>
+    </div>
   );
 };

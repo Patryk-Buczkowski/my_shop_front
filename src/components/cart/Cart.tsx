@@ -58,7 +58,7 @@ const Cart: React.FC = () => {
       {!isEdited && (
         <div className="flex flex-col mb-3 items-center border border-gray-300 rounded-xl p-4 shadow-md bg-[var(--color-secondary)] max-w-[350px] mx-auto">
           <div className="flex justify-between w-full items-end gap-2">
-            <div className="text-gray-700">
+            <div className="text-gray-800">
               {deliveryAdress === null ? (
                 <p className="select-none text-sm text-gray-500">
                   Add delivery address :
@@ -74,21 +74,29 @@ const Cart: React.FC = () => {
                       {deliveryAdress.country}
                     </span>
                   </p>
+
                   <p className="text-sm">
                     City:{" "}
                     <span className="font-medium">{deliveryAdress.city}</span>
                   </p>
+
                   <p className="text-sm">
                     Street & number:{" "}
                     <span className="font-medium">
                       {deliveryAdress.street_number}
                     </span>
                   </p>
+
                   <p className="text-sm">
                     Zip code:{" "}
                     <span className="font-medium">
                       {deliveryAdress.zip_code}
                     </span>
+                  </p>
+
+                  <p className="text-sm">
+                    Voivodeship:{" "}
+                    <span className="font-medium">{deliveryAdress.voivodeship}</span>
                   </p>
                 </div>
               )}
