@@ -4,12 +4,14 @@ import { useState } from "react";
 import { api } from "../../axiosConfig";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useLoggedStore } from "../../zustand/useLogged";
 
 type loginType = "idle" | "pending" | "success" | "error";
 const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
 const LogIn: React.FC = () => {
   const [loginStatus, setLoginStatus] = useState<loginType>();
+  const { setLogged } = useLoggedStore();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -27,7 +29,7 @@ const LogIn: React.FC = () => {
         });
         setLoginStatus("success");
         localStorage.setItem("user", JSON.stringify(user.data));
-        localStorage.setItem("logged", "true");
+        setLogged(true);
         formik.resetForm();
         setTimeout(() => {
           navigate("/all_categories");

@@ -4,21 +4,23 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { mobileMenuLinks } from "../../data/mobileMenuLinks";
 import { UserType } from "../../types/userType";
+import { useLoggedStore } from "../../zustand/useLogged";
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const { logged, setLogged } = useLoggedStore();
   const [user, setUser] = useState<UserType | null>(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  
-  // chceck is logged
-  useEffect(() => {
-    const logged = localStorage.getItem("logged");
 
-    setIsLogged(logged === 'true' ? true : false)
-  }, []);
+  const handlerLink = (linkName: string) => {
+    setIsOpen(false);
+    if (linkName === "📴 Log out") {
+      setLogged(false);
+      return;
+    }
+  };
 
   // for mobile menu
   useEffect(() => {
@@ -48,7 +50,13 @@ export const Header: React.FC = () => {
         <p>Open menu</p>
       </div>
 
-      { isLogged && <img className="h-15 rounded-full" src={user?.imgLink} alt="profile image"/>}
+      {logged && (
+        <img
+          className="h-15 rounded-full"
+          src={user?.imgLink}
+          alt="profile image"
+        />
+      )}
 
       <motion.nav
         initial={{ y: "-100%", x: "100%" }}
@@ -69,17 +77,21 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          {mobileMenuLinks.map((link) => (
-            <Link
-              key={link.link}
-              onClick={() => setIsOpen(false)}
-              className="border-2 text-center select-none rounded-full p-1 active:border-[var(--color-primary-light)]"
-              to={link.link}
-            >
-              {" "}
-              {link.name}{" "}
-            </Link>
-          ))}
+          {mobileMenuLinks.map((link) => {
+            if (link.name === "📴 Log out" && !logged) return null;
+
+            return (
+              <Link
+                key={link.link}
+                onClick={() => handlerLink(link.name)}
+                className="border-2 text-center select-none rounded-full p-1 active:border-[var(--color-primary-light)]"
+                to={link.link}
+              >
+                {" "}
+                {link.name}{" "}
+              </Link>
+            );
+          })}
         </div>
 
         <img
