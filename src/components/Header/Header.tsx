@@ -20,6 +20,7 @@ export const Header: React.FC = () => {
     setIsLogged(logged === 'true' ? true : false)
   }, []);
 
+  // for mobile menu
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");

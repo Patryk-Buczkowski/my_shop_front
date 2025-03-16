@@ -4,8 +4,7 @@ import Button from "@mui/material/Button/Button";
 import { RegisterInputs } from "../registerInputs";
 import { useNavigate } from "react-router-dom";
 import { regsterFormInputs } from "../../../data/registerFormInputs";
-// import { api } from "../../../axiosConfig";
-import axios from "axios";
+import { api } from "../../../axiosConfig";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -54,8 +53,8 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post(
-        `http://localhost:3000/my_shop_api/addUser`,
+      const response = await api.post(
+        `/addUser`,
         formDataToSend,
         {
           headers: {
