@@ -26,7 +26,11 @@ export const useBreakpoint = (breakpoint: Breakpoint) => {
   return matches;
 };
 
-export const isPhone = useBreakpoint("phone");
-export const isTablet = useBreakpoint("tablet");
-export const isDesktop = useBreakpoint("desktop");
-export const isWideScreen = useBreakpoint("wideScreen");
+export const useDeviceBreakpoints = () => {
+  const isPhone = useBreakpoint("phone");
+  const isTablet = useBreakpoint("tablet");
+  const isDesktop = useBreakpoint("desktop");
+  const isWideScreen = useBreakpoint("wideScreen");
+
+  return { isPhone, isTablet, isDesktop, isWideScreen };
+};

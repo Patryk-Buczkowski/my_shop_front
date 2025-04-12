@@ -10,6 +10,11 @@ import {
   useBreakpointListener,
   useBreakpointStore,
 } from "../../../zustand/useBreakPoint";
+import { useLoggedStore } from "../../../zustand/useLogged";
+import { getCssVariable } from "../../../utils/getCssVariable";
+import axios from "axios";
+
+const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
 export const Details: React.FC = () => {
   const location = useLocation();
@@ -25,16 +30,58 @@ export const Details: React.FC = () => {
   const [visibleComments, setVisibleComments] = useState(
     product.commentsList.slice(startFrom, endOn)
   );
+  const [isEdited, setIsEdited] = useState("");
+  const editableValues = [
+    "title",
+    "category",
+    "description",
+    "price",
+    "quantityAvailable",
+  ] as const;
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
+  const { logged } = useLoggedStore();
+  const [newValues, setNewValues] = useState<
+    Partial<Record<keyof ProductType, string | number>>
+  >({
+    title: product.title,
+    category: product.category,
+    description: product.description,
+    price: product.price,
+    quantityAvailable: product.quantityAvailable,
+  });
+
+  console.log("newValues", newValues);
   const detailsElements: Array<[keyof ProductType, string]> = [
     ["title", product.title],
-    ["averageRate", product.averageRate.toFixed(2).toString()],
-    ["category", product.category || "N/A"],
-    ["description", product.description],
     ["price", product.price.toString()],
+    ["description", product.description],
     ["quantityAvailable", product.quantityAvailable?.toString() || "N/A"],
+    ["averageRate", product.averageRate.toFixed(2)],
+    ["rateCount", product.rateCount.toString()],
+    ["category", product.category || "N/A"],
   ];
+  
   useBreakpointListener();
+
+  const updateProduct = async (
+    newData: Partial<Record<keyof ProductType, string | number>>
+  ) => {
+    try {
+      const response = await axios.put(
+        `${BACKEND}/updateProduct/${product._id}`,
+        newData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("product updated");
+      setIsEdited("");
+      navigate("/details", { state: newValues });
+      console.log("updated prod", response.data);
+    } catch (error) {
+      console.error("update error", error);
+    }
+  };
 
   //set inCart
   useEffect(() => {
@@ -49,6 +96,8 @@ export const Details: React.FC = () => {
   useEffect(() => {
     setVisibleComments(product.commentsList.slice(startFrom, endOn));
   }, [endOn, product.commentsList, startFrom]);
+
+  console.log("product", product);
 
   return (
     <>
@@ -79,12 +128,37 @@ export const Details: React.FC = () => {
               className="flex mb-1 m-auto justify-between max-w-80 gap-2 p-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)]"
             >
               <p className="font-bold text-[var(--color-primary)]">{`${key}:`}</p>
-              <p className="text-right text-[var(--color-primary-light)]">
-                {value}
-              </p>
+              {isEdited !== "" &&
+              editableValues.includes(
+                key as (typeof editableValues)[number]
+              ) ? (
+                <input
+                  type="text"
+                  value={newValues[key]}
+                  onChange={(e) =>
+                    setNewValues((prevState) => ({
+                      ...prevState,
+                      [key]: e.target.value,
+                    }))
+                  }
+                />
+              ) : (
+                <p
+                  onClick={() =>
+                    ["moderator", "admin"].includes(logged.role)
+                      ? setIsEdited(product._id)
+                      : console.log("become crew member")
+                  }
+                  className="text-right text-[var(--color-primary-light)]"
+                >
+                  {value}
+                </p>
+              )}
             </span>
           ))}
         </div>
+
+        <p className="rounded-full border-b-transparent border-t-transparent border-r-amber-400 border-l-amber-400 border-1 p-1.5 mb-3.5 text-right text-[var(--color-secondary)]">Comments number - {product.commentsList.length}</p>
 
         <Button
           sx={{
@@ -105,6 +179,23 @@ export const Details: React.FC = () => {
         >
           {inCart ? "Go to cart" : "Add to cart"}
         </Button>
+
+        {isEdited !== "" && (
+          <Button
+            sx={{
+              borderRadius: "100%",
+              width: "100%",
+              maxWidth: "400px",
+              marginBottom: "1.25rem",
+              color: getCssVariable("--edit-mode-color"),
+            }}
+            variant="contained"
+            size="large"
+            onClick={() => updateProduct(newValues)}
+          >
+            Update Product
+          </Button>
+        )}
 
         {product.comments.length !== 0 && (
           <>

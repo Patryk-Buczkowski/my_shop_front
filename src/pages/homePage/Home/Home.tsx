@@ -1,15 +1,15 @@
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLoggedStore } from "../../../zustand/useLogged";
 
 const Home: React.FC = () => {
   const [isLogged, setIsLogged] = useState(false);
+  const { logged } = useLoggedStore();
 
   useEffect(() => {
-    const logged = localStorage.getItem("logged");
-
-    setIsLogged(logged === 'true' ? true : false)
-  }, []);
+    setIsLogged(logged.name !== "" ? true : false);
+  }, [logged.name]);
 
   return (
     <div className="w-full">
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
           size="large"
           disabled={isLogged}
         >
-          {isLogged ? 'You are logged' : 'Log in'}
+          {isLogged ? "You are logged" : "Log in"}
         </Button>
       </Link>
 

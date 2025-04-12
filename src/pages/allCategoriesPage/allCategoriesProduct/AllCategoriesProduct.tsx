@@ -1,6 +1,7 @@
 import React from "react";
 import { ProductType } from "../../../types/productType";
 import { useNavigate } from "react-router-dom";
+import { useLoggedStore } from "../../../zustand/useLogged";
 
 type Props = {
   product: ProductType;
@@ -8,6 +9,8 @@ type Props = {
 
 export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
   const navigate = useNavigate();
+  const { logged } = useLoggedStore();
+  console.log('logged', logged)
   return (
     <div
       onClick={() => {
@@ -24,10 +27,11 @@ export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
         {product.title}
       </div>
       <p className="text-center text-[var(--color-secondary)]">{`${product.price} $`}</p>
-      <p>
-        comments list length
-        {product.commentsList.length ? product.commentsList.length : 0}
-      </p>
+
+      {['moderator', 'admin'].includes(logged.role) && (
+        <p className="text-center text-[var(--edit-mode-color)]">editable</p>        
+      )}
+
     </div>
   );
 };

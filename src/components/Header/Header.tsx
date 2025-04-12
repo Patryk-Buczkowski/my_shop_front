@@ -3,21 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { mobileMenuLinks } from "../../data/mobileMenuLinks";
-import { UserType } from "../../types/userType";
 import { useLoggedStore } from "../../zustand/useLogged";
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logged, setLogged } = useLoggedStore();
-  const [user, setUser] = useState<UserType | null>(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
 
   const handlerLink = (linkName: string) => {
     setIsOpen(false);
     if (linkName === "📴 Log out") {
-      setLogged(false);
+      setLogged({ _id: "", email: "", imgLink: "", name: "", role: "" });
       return;
     }
   };
@@ -33,12 +28,12 @@ export const Header: React.FC = () => {
   }, [isOpen]);
 
   // get user
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  // }, []);
 
   return (
     <div className="flex justify-between">
@@ -50,10 +45,10 @@ export const Header: React.FC = () => {
         <p>Open menu</p>
       </div>
 
-      {logged && (
+      {logged.name !== '' && (
         <img
-          className="h-15 rounded-full"
-          src={user?.imgLink}
+          className="h-13 rounded-full"
+          src={logged.imgLink}
           alt="profile image"
         />
       )}
@@ -78,7 +73,7 @@ export const Header: React.FC = () => {
 
         <div className="flex flex-col gap-2">
           {mobileMenuLinks.map((link) => {
-            if (link.name === "📴 Log out" && !logged) return null;
+            if (link.name === "📴 Log out" && logged.name === '') return null;
 
             return (
               <Link
@@ -95,8 +90,7 @@ export const Header: React.FC = () => {
         </div>
 
         <img
-          className="h-45 select-none m-auto rounded-full
-    "
+          className="h-45 select-none m-auto rounded-full"
           src="./logo/Shop_logo14.jpg"
           alt="logo"
         />

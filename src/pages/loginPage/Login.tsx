@@ -11,7 +11,7 @@ const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
 const LogIn: React.FC = () => {
   const [loginStatus, setLoginStatus] = useState<loginType>();
-  const { setLogged } = useLoggedStore();
+  const { setLogged, logged } = useLoggedStore();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -28,8 +28,9 @@ const LogIn: React.FC = () => {
           password: values.password,
         });
         setLoginStatus("success");
-        localStorage.setItem("user", JSON.stringify(user.data));
-        setLogged(true);
+        setLogged(user.data);
+        sessionStorage.setItem("userId", user.data._id);
+        console.log(logged);
         formik.resetForm();
         setTimeout(() => {
           navigate("/all_categories");
