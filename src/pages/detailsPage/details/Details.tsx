@@ -60,7 +60,7 @@ export const Details: React.FC = () => {
     ["rateCount", product.rateCount.toString()],
     ["category", product.category || "N/A"],
   ];
-  
+
   useBreakpointListener();
 
   const updateProduct = async (
@@ -158,7 +158,9 @@ export const Details: React.FC = () => {
           ))}
         </div>
 
-        <p className="rounded-full border-b-transparent border-t-transparent border-r-amber-400 border-l-amber-400 border-1 p-1.5 mb-3.5 text-right text-[var(--color-secondary)]">Comments number - {product.commentsList.length}</p>
+        <p className="rounded-full border-b-transparent border-t-transparent border-r-amber-400 border-l-amber-400 border-1 p-1.5 mb-3.5 text-right text-[var(--color-secondary)]">
+          Comments number - {product.commentsList.length}
+        </p>
 
         <Button
           sx={{
@@ -181,20 +183,37 @@ export const Details: React.FC = () => {
         </Button>
 
         {isEdited !== "" && (
-          <Button
-            sx={{
-              borderRadius: "100%",
-              width: "100%",
-              maxWidth: "400px",
-              marginBottom: "1.25rem",
-              color: getCssVariable("--edit-mode-color"),
-            }}
-            variant="contained"
-            size="large"
-            onClick={() => updateProduct(newValues)}
-          >
-            Update Product
-          </Button>
+          <div className="flex gap-1">
+            <Button
+              sx={{
+                borderRadius: "100%",
+                width: "200px",
+                maxWidth: "400px",
+                marginBottom: "1.25rem",
+                color: getCssVariable("--edit-mode-color"),
+              }}
+              variant="contained"
+              size="large"
+              onClick={() => updateProduct(newValues)}
+            >
+              Update Product
+            </Button>
+
+            <Button
+              sx={{
+                borderRadius: "100%",
+                width: "200px",
+                maxWidth: "400px",
+                marginBottom: "1.25rem",
+                color: getCssVariable("--color-error"),
+              }}
+              variant="contained"
+              size="large"
+              onClick={() => setIsEdited("")}
+            >
+              Cancel update
+            </Button>
+          </div>
         )}
 
         {product.comments.length !== 0 && (
