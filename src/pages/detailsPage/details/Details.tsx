@@ -30,7 +30,6 @@ export const Details: React.FC = () => {
   const [visibleComments, setVisibleComments] = useState(
     product.commentsList.slice(startFrom, endOn)
   );
-  const [isEdited, setIsEdited] = useState("");
   const editableValues = [
     "title",
     "category",
@@ -39,7 +38,7 @@ export const Details: React.FC = () => {
     "quantityAvailable",
   ] as const;
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
-  const { logged } = useLoggedStore();
+  const { logged, isEdited, setIsEdited } = useLoggedStore();
   const [newValues, setNewValues] = useState<
     Partial<Record<keyof ProductType, string | number>>
   >({
@@ -128,7 +127,7 @@ export const Details: React.FC = () => {
               className="flex mb-1 m-auto justify-between max-w-80 gap-2 p-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)]"
             >
               <p className="font-bold text-[var(--color-primary)]">{`${key}:`}</p>
-              {isEdited !== "" &&
+              {isEdited === product._id &&
               editableValues.includes(
                 key as (typeof editableValues)[number]
               ) ? (

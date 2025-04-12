@@ -2,16 +2,20 @@ import { create } from "zustand";
 import axios from "axios";
 import { LoggedUserType } from "../types/loggedUser";
 
-type loggedType = {
+type LoggedType = {
   logged: LoggedUserType;
+  isEdited: string;
+  setIsEdited: (vaue: string) => void;
   setLogged: (value: LoggedUserType) => void;
   fetchUserData: () => Promise<void>;
 };
 
 const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
-export const useLoggedStore = create<loggedType>((set) => ({
+export const useLoggedStore = create<LoggedType>((set) => ({
   logged: { _id: "", email: "", imgLink: "", name: "", role: "" },
+  isEdited: "",
+  setIsEdited: (value) => set({ isEdited: value }),
   setLogged: (value) => set({ logged: value }),
 
   
