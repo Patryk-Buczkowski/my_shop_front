@@ -52,7 +52,8 @@ export const Details: React.FC = () => {
     comments: product.comments,
     pictureUrl: product.pictureUrl,
     averageRate: product.averageRate,
-    rateCount: product.rateCount
+    rateCount: product.rateCount,
+    _id: product._id
   });
 
   console.log("newValues", newValues);
