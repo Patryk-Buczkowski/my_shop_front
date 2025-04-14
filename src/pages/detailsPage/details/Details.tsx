@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ProductType } from "../../../types/productType";
+import { CommentType, ProductType } from "../../../types/productType";
 import styles from "./Details.module.scss";
 import { Button, Pagination } from "@mui/material";
 import { useStore } from "zustand";
@@ -30,6 +30,7 @@ export const Details: React.FC = () => {
   const [visibleComments, setVisibleComments] = useState(
     product.commentsList.slice(startFrom, endOn)
   );
+  const [isEdited, setIsEdited] = useState("");
   const editableValues = [
     "title",
     "category",
@@ -38,32 +39,37 @@ export const Details: React.FC = () => {
     "quantityAvailable",
   ] as const;
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
-  const { logged, isEdited, setIsEdited } = useLoggedStore();
+  const { logged } = useLoggedStore();
   const [newValues, setNewValues] = useState<
-    Partial<Record<keyof ProductType, string | number>>
+    Partial<Record<keyof ProductType, string | number | CommentType[]>>
   >({
     title: product.title,
     category: product.category,
     description: product.description,
     price: product.price,
     quantityAvailable: product.quantityAvailable,
+    commentsList: product.commentsList,
+    comments: product.comments,
+    pictureUrl: product.pictureUrl,
+    averageRate: product.averageRate,
+    rateCount: product.rateCount
   });
 
   console.log("newValues", newValues);
-  const detailsElements: Array<[keyof ProductType, string]> = [
+  const detailsElements: Array<[keyof ProductType, string | number ]> = [
     ["title", product.title],
     ["price", product.price.toString()],
     ["description", product.description],
     ["quantityAvailable", product.quantityAvailable?.toString() || "N/A"],
     ["averageRate", product.averageRate.toFixed(2)],
-    ["rateCount", product.rateCount.toString()],
+    ["rateCount", product.rateCount],
     ["category", product.category || "N/A"],
   ];
 
   useBreakpointListener();
 
   const updateProduct = async (
-    newData: Partial<Record<keyof ProductType, string | number>>
+    newData: Partial<Record<keyof ProductType, string | number | CommentType[]>>
   ) => {
     try {
       const response = await axios.put(
@@ -127,7 +133,7 @@ export const Details: React.FC = () => {
               className="flex mb-1 m-auto justify-between max-w-80 gap-2 p-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)]"
             >
               <p className="font-bold text-[var(--color-primary)]">{`${key}:`}</p>
-              {isEdited === product._id &&
+              {isEdited !== "" &&
               editableValues.includes(
                 key as (typeof editableValues)[number]
               ) ? (
@@ -182,12 +188,12 @@ export const Details: React.FC = () => {
         </Button>
 
         {isEdited !== "" && (
-          <div className="flex gap-1">
+          <div className="w-[400px] gap-1.5 flex">
             <Button
               sx={{
                 borderRadius: "100%",
-                width: "200px",
-                maxWidth: "400px",
+                width: "100%",
+                maxWidth: '200px',
                 marginBottom: "1.25rem",
                 color: getCssVariable("--edit-mode-color"),
               }}
@@ -201,8 +207,8 @@ export const Details: React.FC = () => {
             <Button
               sx={{
                 borderRadius: "100%",
-                width: "200px",
-                maxWidth: "400px",
+                width: "100%",
+                maxWidth: "200px",
                 marginBottom: "1.25rem",
                 color: getCssVariable("--color-error"),
               }}
@@ -210,7 +216,7 @@ export const Details: React.FC = () => {
               size="large"
               onClick={() => setIsEdited("")}
             >
-              Cancel update
+              Cancel Update
             </Button>
           </div>
         )}
