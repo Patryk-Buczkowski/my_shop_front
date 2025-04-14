@@ -140,7 +140,7 @@ export const Details: React.FC = () => {
               ) ? (
                 <input
                   type="text"
-                  value={newValues[key]}
+                  value={String(newValues[key])}
                   onChange={(e) =>
                     setNewValues((prevState) => ({
                       ...prevState,

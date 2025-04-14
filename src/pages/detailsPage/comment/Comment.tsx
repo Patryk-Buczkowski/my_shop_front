@@ -23,7 +23,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
           : console.log("become crew member")
       }
       className={cn(
-        "flex flex-col items-center gap-1 p-2 rounded-md border border-[var(--color-secondary)] shadow-lg",
+        "flex relative flex-col items-center gap-1 p-2 rounded-md border border-[var(--color-secondary)] shadow-lg",
         {
           "text-sm": isPhone,
           "text-md": isTablet,
@@ -31,6 +31,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
         }
       )}
     >
+      {isEdited && <div className="absolute right-0.5 top-0.5" onClick={() => console.log('usuń')}>❌</div>}
 
       <p className="mb-1 tracking-widest font-extrabold text-[var(--color-secondary)] uppercase bg-[var(--color-primary-light)] px-2 rounded-md">
         Author:
