@@ -7,7 +7,7 @@ import { useLoggedStore } from "../../zustand/useLogged";
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { logged, setLogged } = useLoggedStore();
+  const { loggedUser: logged, setLoggedUser: setLogged } = useLoggedStore();
 
   const handlerLink = (linkName: string) => {
     setIsOpen(false);
@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
         <p>Open menu</p>
       </div>
 
-      {logged.name !== '' && (
+      {logged.name !== "" && (
         <img
           className="h-13 rounded-full"
           src={logged.imgLink}
@@ -73,7 +73,7 @@ export const Header: React.FC = () => {
 
         <div className="flex flex-col gap-2">
           {mobileMenuLinks.map((link) => {
-            if (link.name === "📴 Log out" && logged.name === '') return null;
+            if (link.name === "📴 Log out" && logged.name === "") return null;
 
             return (
               <Link

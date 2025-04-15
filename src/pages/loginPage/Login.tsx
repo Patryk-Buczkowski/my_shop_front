@@ -11,7 +11,7 @@ const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
 const LogIn: React.FC = () => {
   const [loginStatus, setLoginStatus] = useState<loginType>();
-  const { setLogged, logged } = useLoggedStore();
+  const { setLoggedUser: setLogged, loggedUser: logged } = useLoggedStore();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {

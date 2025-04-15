@@ -9,8 +9,8 @@ type Props = {
 
 export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
   const navigate = useNavigate();
-  const { logged } = useLoggedStore();
-  console.log('logged', logged)
+  const { loggedUser: logged } = useLoggedStore();
+  console.log("logged", logged);
   return (
     <div
       onClick={() => {
@@ -28,10 +28,9 @@ export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
       </div>
       <p className="text-center text-[var(--color-secondary)]">{`${product.price} $`}</p>
 
-      {['moderator', 'admin'].includes(logged.role) && (
-        <p className="text-center text-[var(--edit-mode-color)]">editable</p>        
+      {["moderator", "admin"].includes(logged.role) && (
+        <p className="text-center text-[var(--edit-mode-color)]">editable</p>
       )}
-
     </div>
   );
 };

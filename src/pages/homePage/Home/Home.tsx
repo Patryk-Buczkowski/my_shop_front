@@ -5,7 +5,7 @@ import { useLoggedStore } from "../../../zustand/useLogged";
 
 const Home: React.FC = () => {
   const [isLogged, setIsLogged] = useState(false);
-  const { logged } = useLoggedStore();
+  const { loggedUser: logged } = useLoggedStore();
 
   useEffect(() => {
     setIsLogged(logged.name !== "" ? true : false);

@@ -30,7 +30,6 @@ export const Details: React.FC = () => {
   const [visibleComments, setVisibleComments] = useState(
     product.commentsList.slice(startFrom, endOn)
   );
-  const [isEdited, setIsEdited] = useState("");
   const editableValues = [
     "title",
     "category",
@@ -39,7 +38,12 @@ export const Details: React.FC = () => {
     "quantityAvailable",
   ] as const;
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
-  const { logged } = useLoggedStore();
+  const {
+    loggedUser: logged,
+    setEditedProductId,
+    isEdited,
+    setIsEdited,
+  } = useLoggedStore();
   const [newValues, setNewValues] = useState<
     Partial<Record<keyof ProductType, string | number | CommentType[]>>
   >({
@@ -53,11 +57,10 @@ export const Details: React.FC = () => {
     pictureUrl: product.pictureUrl,
     averageRate: product.averageRate,
     rateCount: product.rateCount,
-    _id: product._id
+    _id: product._id,
   });
 
-  console.log("newValues", newValues);
-  const detailsElements: Array<[keyof ProductType, string | number ]> = [
+  const detailsElements: Array<[keyof ProductType, string | number]> = [
     ["title", product.title],
     ["price", product.price.toString()],
     ["description", product.description],
@@ -81,7 +84,7 @@ export const Details: React.FC = () => {
         }
       );
       console.log("product updated");
-      setIsEdited("");
+      setIsEdited(false);
       navigate("/details", { state: newValues });
       console.log("updated prod", response.data);
     } catch (error) {
@@ -103,7 +106,10 @@ export const Details: React.FC = () => {
     setVisibleComments(product.commentsList.slice(startFrom, endOn));
   }, [endOn, product.commentsList, startFrom]);
 
-  console.log("product", product);
+  //set edited product id
+  useEffect(() => {
+    setEditedProductId(product._id)
+  }, [])
 
   return (
     <>
@@ -134,7 +140,8 @@ export const Details: React.FC = () => {
               className="flex mb-1 m-auto justify-between max-w-80 gap-2 p-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)]"
             >
               <p className="font-bold text-[var(--color-primary)]">{`${key}:`}</p>
-              {isEdited !== "" &&
+
+              {isEdited &&
               editableValues.includes(
                 key as (typeof editableValues)[number]
               ) ? (
@@ -152,7 +159,7 @@ export const Details: React.FC = () => {
                 <p
                   onClick={() =>
                     ["moderator", "admin"].includes(logged.role)
-                      ? setIsEdited(product._id)
+                      ? setIsEdited(true)
                       : console.log("become crew member")
                   }
                   className="text-right text-[var(--color-primary-light)]"
@@ -188,13 +195,13 @@ export const Details: React.FC = () => {
           {inCart ? "Go to cart" : "Add to cart"}
         </Button>
 
-        {isEdited !== "" && (
+        {isEdited && (
           <div className="w-[400px] gap-1.5 flex">
             <Button
               sx={{
                 borderRadius: "100%",
                 width: "100%",
-                maxWidth: '200px',
+                maxWidth: "200px",
                 marginBottom: "1.25rem",
                 color: getCssVariable("--edit-mode-color"),
               }}
@@ -215,7 +222,7 @@ export const Details: React.FC = () => {
               }}
               variant="contained"
               size="large"
-              onClick={() => setIsEdited("")}
+              onClick={() => setIsEdited(false)}
             >
               Cancel Update
             </Button>
