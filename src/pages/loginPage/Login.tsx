@@ -43,7 +43,9 @@ const LogIn: React.FC = () => {
   });
 
   const isButtonDisabled =
-    !formik.dirty || !formik.isValid || formik.isSubmitting;
+    // !formik.dirty || 
+    !formik.isValid  || 
+    formik.isSubmitting;
 
   return (
     <FormikProvider value={formik}>
