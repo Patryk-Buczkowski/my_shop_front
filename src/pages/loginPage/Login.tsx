@@ -15,8 +15,8 @@ const LogIn: React.FC = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: 'patryk.buczkowski.oferty.pracy@outlook.com',
+      password: "1q2w3e4r$R",
     },
     validationSchema,
     onSubmit: async (values) => {
