@@ -16,8 +16,7 @@ const Home: React.FC = () => {
       <h1 className="mb-2 text-center">Welcome to</h1>
 
       <img
-        className="h-45 m-auto mb-3 rounded-full
-    "
+        className="h-45 m-auto mb-3 rounded-full"
         src="./logo/Shop_logo14.jpg"
         alt="logo"
       />

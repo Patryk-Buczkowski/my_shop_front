@@ -25,7 +25,7 @@ const AllCategories: React.FC = () => {
   const startFrom = perPage * pageNr - perPage;
   const endOn = Math.min(perPage * pageNr, selectedCategoryProducts.length);
   const [visibleProducts, setVisibleProducts] = useState(
-    selectedCategoryProducts.slice(startFrom, endOn)
+    selectedCategoryProducts.slice(startFrom, endOn),
   );
   const { isTablet, isDesktop, isWideScreen } = useBreakpointStore();
 
@@ -39,7 +39,7 @@ const AllCategories: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await api.get(
-          `${BACKEND}/filterProduct?${searchParams.toString()}`
+          `${BACKEND}/filterProduct`,
         );
         if (response.data) {
           setSelectedCategoryProducts(response.data);
@@ -59,7 +59,7 @@ const AllCategories: React.FC = () => {
   }, [endOn, selectedCategoryProducts, startFrom]);
 
   return (
-    <div className="p-1 min-h-[calc(100%-80px)] flex flex-col justify-center">
+    <div className="flex min-h-[calc(100%-80px)] flex-col justify-center p-1">
       <img src="./bubble_01.svg" className={`${styles.decoration__top_left}`} />
       <img
         src="./bubble_02.svg"
@@ -114,7 +114,7 @@ const AllCategories: React.FC = () => {
       {isLoading && <Loading size={150} />}
 
       {!isLoading && (
-        <div className="flex justify-center gap-2 flex-wrap">
+        <div className="flex flex-wrap justify-center gap-2">
           {visibleProducts.map((product, index) => (
             <AllCategoriesProduct
               product={product}

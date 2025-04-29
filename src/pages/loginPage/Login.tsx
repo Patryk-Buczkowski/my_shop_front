@@ -61,11 +61,11 @@ const LogIn: React.FC = () => {
             </p>
           )}
 
-          <div className="container max-w-65 flex flex-col">
+          <div className="max-w-65 container flex flex-col">
             <label className="mb-2 flex justify-between">
               Email:
               <input
-                className="border-1 p-1 border-amber-400 rounded-lg ml-1"
+                className="border-1 ml-1 rounded-lg border-amber-400 p-1"
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -80,7 +80,7 @@ const LogIn: React.FC = () => {
             <label className="mb-2 flex justify-between">
               Password:
               <input
-                className="border-1 border-amber-400 rounded-lg ml-1 p-1"
+                className="border-1 ml-1 rounded-lg border-amber-400 p-1"
                 type="password"
                 name="password"
                 autoComplete="current-password"

@@ -20,7 +20,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const handleRegister = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -53,15 +53,11 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await api.post(
-        `/addUser`,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await api.post(`/addUser`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(response.data);
 
       if (response.status === 201) {
@@ -83,10 +79,10 @@ const Register: React.FC = () => {
 
   return (
     <div className="p-3">
-      <h1 className="text-4xl mb-2 w-35 whitespace-pre-wrap">Create Account</h1>
+      <h1 className="w-35 mb-2 whitespace-pre-wrap text-4xl">Create Account</h1>
 
       <img
-        className="rounded-full mb-5 w-25"
+        className="w-25 mb-5 rounded-full"
         src={
           formData.imgLink === null
             ? "./Upload_Photo.svg"

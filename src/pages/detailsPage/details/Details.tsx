@@ -28,7 +28,7 @@ export const Details: React.FC = () => {
   const startFrom = PER_PAGE * pageNr - PER_PAGE;
   const endOn = Math.min(PER_PAGE * pageNr, product.commentsList.length);
   const [visibleComments, setVisibleComments] = useState(
-    product.commentsList.slice(startFrom, endOn)
+    product.commentsList.slice(startFrom, endOn),
   );
   const editableValues = [
     "title",
@@ -44,6 +44,7 @@ export const Details: React.FC = () => {
     isEdited,
     setIsEdited,
   } = useLoggedStore();
+
   const [newValues, setNewValues] = useState<
     Partial<Record<keyof ProductType, string | number | CommentType[]>>
   >({
@@ -73,7 +74,9 @@ export const Details: React.FC = () => {
   useBreakpointListener();
 
   const updateProduct = async (
-    newData: Partial<Record<keyof ProductType, string | number | CommentType[]>>
+    newData: Partial<
+      Record<keyof ProductType, string | number | CommentType[]>
+    >,
   ) => {
     try {
       const response = await axios.put(
@@ -81,7 +84,7 @@ export const Details: React.FC = () => {
         newData,
         {
           withCredentials: true,
-        }
+        },
       );
       console.log("product updated");
       setIsEdited(false);
@@ -108,8 +111,8 @@ export const Details: React.FC = () => {
 
   //set edited product id
   useEffect(() => {
-    setEditedProductId(product._id)
-  }, [])
+    setEditedProductId(product._id);
+  }, []);
 
   return (
     <>
@@ -128,7 +131,7 @@ export const Details: React.FC = () => {
       />
       <div className="flex min-h-[88vh] flex-col items-center">
         <img
-          className="w-35 mb-2 m-auto rounded-lg"
+          className="w-35 m-auto mb-2 rounded-lg"
           src={product.pictureUrl}
           alt="product image"
         />
@@ -137,13 +140,13 @@ export const Details: React.FC = () => {
           {detailsElements.map(([key, value]) => (
             <span
               key={key}
-              className="flex mb-1 m-auto justify-between max-w-80 gap-2 p-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)]"
+              className="m-auto mb-1 flex max-w-80 justify-between gap-2 rounded-md border border-[var(--color-secondary)] bg-[var(--bgColor)] p-2"
             >
               <p className="font-bold text-[var(--color-primary)]">{`${key}:`}</p>
 
               {isEdited &&
               editableValues.includes(
-                key as (typeof editableValues)[number]
+                key as (typeof editableValues)[number],
               ) ? (
                 <input
                   type="text"
@@ -171,7 +174,7 @@ export const Details: React.FC = () => {
           ))}
         </div>
 
-        <p className="rounded-full border-b-transparent border-t-transparent border-r-amber-400 border-l-amber-400 border-1 p-1.5 mb-3.5 text-right text-[var(--color-secondary)]">
+        <p className="border-1 mb-3.5 rounded-full border-b-transparent border-l-amber-400 border-r-amber-400 border-t-transparent p-1.5 text-right text-[var(--color-secondary)]">
           Comments number - {product.commentsList.length}
         </p>
 
@@ -196,7 +199,7 @@ export const Details: React.FC = () => {
         </Button>
 
         {isEdited && (
-          <div className="w-[400px] gap-1.5 flex">
+          <div className="flex w-[400px] gap-1.5">
             <Button
               sx={{
                 borderRadius: "100%",
@@ -231,7 +234,7 @@ export const Details: React.FC = () => {
 
         {product.comments.length !== 0 && (
           <>
-            <div className="m-auto w-full flex justify-center mb-5">
+            <div className="m-auto mb-5 flex w-full justify-center">
               <Pagination
                 size={
                   (isDesktop && "large") || (isTablet && "medium") || "small"
@@ -262,7 +265,7 @@ export const Details: React.FC = () => {
                 onChange={(_event, page) => setPageNr(page)}
               />
             </div>
-            <div className="w-full max-w-100 m-auto">
+            <div className="max-w-100 m-auto w-full">
               <CommentsList comments={visibleComments} />
             </div>
           </>

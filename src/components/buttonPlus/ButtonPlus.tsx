@@ -12,7 +12,7 @@ export const ButtonPlus: React.FC<Props> = ({ product, add }) => {
     <>
       <div
         onClick={() => add(product)}
-        className="w-5 h-5 flex justify-items-center justify-center align-baseline rounded-full border-2 border-[var(--color-primary)]"
+        className="flex h-5 w-5 justify-center justify-items-center rounded-full border-2 border-[var(--color-primary)] align-baseline"
       >
         <Plus color="var(--color-primary)" size={15} />
       </div>

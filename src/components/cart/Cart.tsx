@@ -15,7 +15,7 @@ const Cart: React.FC = () => {
   const [deliveryAdress, setDeliveryAdress] = useState<DeliveryAdress | null>(
     localStorage.getItem("deliveryAddress")
       ? JSON.parse(localStorage.getItem("deliveryAddress") || "{}")
-      : null
+      : null,
   );
   const [isEdited, setIsEdited] = useState(false);
   const formInputs: (keyof DeliveryAdress)[] = [
@@ -38,7 +38,7 @@ const Cart: React.FC = () => {
 
   const handlerCloseInput = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    resetForm: () => void
+    resetForm: () => void,
   ) => {
     if (e.key === "Escape") {
       resetForm();
@@ -52,12 +52,12 @@ const Cart: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full p-1 gap-0.5">
-      <h3 className="font-bold select-none tracking-wider">Cart</h3>
+    <div className="flex w-full flex-col gap-0.5 p-1">
+      <h3 className="select-none font-bold tracking-wider">Cart</h3>
 
       {!isEdited && (
-        <div className="flex flex-col mb-3 items-center border border-gray-300 rounded-xl p-4 shadow-md bg-[var(--color-secondary)] max-w-[350px] mx-auto">
-          <div className="flex justify-between w-full items-end gap-2">
+        <div className="mx-auto mb-3 flex max-w-[350px] flex-col items-center rounded-xl border border-gray-300 bg-[var(--color-secondary)] p-4 shadow-md">
+          <div className="flex w-full items-end justify-between gap-2">
             <div className="text-gray-800">
               {deliveryAdress === null ? (
                 <p className="select-none text-sm text-gray-500">
@@ -96,18 +96,20 @@ const Cart: React.FC = () => {
 
                   <p className="text-sm">
                     Voivodeship:{" "}
-                    <span className="font-medium">{deliveryAdress.voivodeship}</span>
+                    <span className="font-medium">
+                      {deliveryAdress.voivodeship}
+                    </span>
                   </p>
                 </div>
               )}
             </div>
 
             <button
-              className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-[var(--color-secondary)]"
+              className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-1 text-[var(--color-secondary)] transition hover:bg-gray-200"
               onClick={() => setIsEdited(true)}
             >
               <Pencil size={16} className="text-gray-600" />
-              <span className="font-bold tracking-wide text-sm">Edit</span>
+              <span className="text-sm font-bold tracking-wide">Edit</span>
             </button>
           </div>
         </div>
@@ -140,7 +142,7 @@ const Cart: React.FC = () => {
               {formInputs.map((input) => (
                 <div key={input} className="mb-2">
                   <Field
-                    className="mb-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]"
+                    className="mb-1 max-w-[200px] rounded-md border-2 border-[var(--color-primary-light)] text-sm"
                     type="text"
                     name={input}
                     placeholder={`Type ${input}`}
@@ -152,13 +154,13 @@ const Cart: React.FC = () => {
                     }
                   />
                   {errors[input] && touched[input] && (
-                    <div className="text-red-500 text-xs">{errors[input]}</div>
+                    <div className="text-xs text-red-500">{errors[input]}</div>
                   )}
                 </div>
               ))}
 
               <button
-                className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)] select-none active:text-[var(--color-primary-light)]"
+                className="border-1 ml-3 select-none rounded-md bg-[var(--color-secondary)] p-1 active:text-[var(--color-primary-light)]"
                 type="submit"
                 onClick={() => handlerSetAddress(values)}
               >
@@ -168,7 +170,7 @@ const Cart: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsEdited(false)}
-                className="ml-3 p-1 rounded-md border-1 bg-[var(--color-secondary)] select-none  active:border-red-600"
+                className="border-1 ml-3 select-none rounded-md bg-[var(--color-secondary)] p-1 active:border-red-600"
               >
                 ❌
               </button>
@@ -182,7 +184,7 @@ const Cart: React.FC = () => {
           {cart.map((product) => (
             <div
               key={product._id}
-              className="flex m-auto max-w-[500px] justify-between mb-3"
+              className="m-auto mb-3 flex max-w-[500px] justify-between"
             >
               <div
                 onClick={() => {
@@ -191,21 +193,21 @@ const Cart: React.FC = () => {
                 className="relative h-fit"
               >
                 <img
-                  className="relative w-[85px] h-[85px]"
+                  className="relative h-[85px] w-[85px]"
                   src={product.pictureUrl}
                   alt="product image"
                 />
                 <div
                   onClick={() => removeFromCart(product._id)}
-                  className="absolute w-5.5 h-5.5 rounded-full bottom-2 left-1 bg-white flex justify-center items-center"
+                  className="w-5.5 h-5.5 absolute bottom-2 left-1 flex items-center justify-center rounded-full bg-white"
                 >
                   <Trash2 size={13} color="red" />
                 </div>
               </div>
 
-              <div className="w-[70%] min-w-[200px] flex flex-col gap-2 p-3 rounded-lg border border-[var(--color-secondary)] shadow-md text-sm font-light bg-[var(--bgColor)]">
-                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
-                  <p className="text-[var(--color-secondary)] font-semibold">
+              <div className="flex w-[70%] min-w-[200px] flex-col gap-2 rounded-lg border border-[var(--color-secondary)] bg-[var(--bgColor)] p-3 text-sm font-light shadow-md">
+                <span className="flex items-center justify-between border-b border-[var(--color-secondary)] pb-1">
+                  <p className="font-semibold text-[var(--color-secondary)]">
                     Title:
                   </p>
                   <p className="text-[var(--color-primary-light)]">
@@ -213,8 +215,8 @@ const Cart: React.FC = () => {
                   </p>
                 </span>
 
-                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
-                  <p className="text-[var(--color-secondary)] font-semibold">
+                <span className="flex items-center justify-between border-b border-[var(--color-secondary)] pb-1">
+                  <p className="font-semibold text-[var(--color-secondary)]">
                     Description:
                   </p>
                   <p className="text-[var(--color-primary-light)]">
@@ -222,8 +224,8 @@ const Cart: React.FC = () => {
                   </p>
                 </span>
 
-                <span className="flex justify-between items-center border-b border-[var(--color-secondary)] pb-1">
-                  <p className="text-[var(--color-secondary)] font-semibold">
+                <span className="flex items-center justify-between border-b border-[var(--color-secondary)] pb-1">
+                  <p className="font-semibold text-[var(--color-secondary)]">
                     avg Rate:
                   </p>
                   <p className="text-[var(--color-primary-light)]">
@@ -231,12 +233,12 @@ const Cart: React.FC = () => {
                   </p>
                 </span>
 
-                <span className="flex justify-between items-center mt-2">
+                <span className="mt-2 flex items-center justify-between">
                   <p className="text-lg font-bold text-[var(--color-primary)]">{`$${(product.price * product.amount).toFixed(2) ?? "N/A"}`}</p>
 
-                  <span className="flex justify-between items-center gap-2 min-w-[35%] max-w-[40%]">
+                  <span className="flex min-w-[35%] max-w-[40%] items-center justify-between gap-2">
                     <ButtonPlus product={product} add={addToCart} />
-                    <p className="rounded-lg text-[var(--color-secondary)] font-semibold w-6 text-center bg-[var(--color-primary-light)] shadow-sm">
+                    <p className="w-6 rounded-lg bg-[var(--color-primary-light)] text-center font-semibold text-[var(--color-secondary)] shadow-sm">
                       {`${product.amount}`}
                     </p>
                     <ButtonMinus product={product} subtract={decreaseAmount} />
@@ -249,7 +251,7 @@ const Cart: React.FC = () => {
       )}
 
       {cart.length !== 0 ? (
-        <p className="m-auto rounded-2xl text-[var(--color-secondary)] font-semibold p-2 text-center bg-[var(--color-primary-light)] shadow-sm">{`Total sum $${totalSum.toFixed(2)}`}</p>
+        <p className="m-auto rounded-2xl bg-[var(--color-primary-light)] p-2 text-center font-semibold text-[var(--color-secondary)] shadow-sm">{`Total sum $${totalSum.toFixed(2)}`}</p>
       ) : (
         <p>Cart is empty</p>
       )}

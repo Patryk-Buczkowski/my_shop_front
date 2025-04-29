@@ -25,7 +25,7 @@ type Props = {
   errorPassword: boolean;
   handleBlur: () => void;
   handleRegister: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -39,7 +39,7 @@ export const RegisterInputs: React.FC<Props> = ({
   handleBlur,
 }) => {
   return (
-    <div className="flex w-51 m-auto mb-8 flex-col">
+    <div className="w-51 m-auto mb-8 flex flex-col">
       {inputs.map((input) => {
         if (input.type === "select") {
           return (
@@ -48,7 +48,7 @@ export const RegisterInputs: React.FC<Props> = ({
               name={input.name}
               value={formData.country || "PL"}
               onChange={handleRegister}
-              className="mb-1 mr-1 p-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]"
+              className="mb-1 mr-1 max-w-[200px] rounded-md border-2 border-[var(--color-primary-light)] p-1 text-sm"
             >
               {input.options &&
                 input.options.map((option) => (
@@ -88,8 +88,7 @@ export const RegisterInputs: React.FC<Props> = ({
                   input.type === "password" ? "new-password" : "off"
                 }
                 accept={input.type === "file" ? "image/*" : undefined}
-                className={`mb-1 p-1 rounded-md text-sm border-2 border-[var(--color-primary-light)] max-w-[200px]
-                ${(input.name === "password" || input.name === "re-password") && errorPassword && "border-red-600"}`}
+                className={`mb-1 max-w-[200px] rounded-md border-2 border-[var(--color-primary-light)] p-1 text-sm ${(input.name === "password" || input.name === "re-password") && errorPassword && "border-red-600"}`}
               />
               {errorPassword &&
                 (input.name === "password" || input.name === "re-password") && (

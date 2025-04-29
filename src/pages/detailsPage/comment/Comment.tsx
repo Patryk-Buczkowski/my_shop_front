@@ -22,7 +22,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
       .then(() => fetchProductData())
       .then((data) => {
         console.log("data", data);
-         navigate("/details", { state: data });
+        navigate("/details", { state: data });
       })
       .catch(() => console.error("error in fetch prouct after delete comment"));
   };
@@ -37,12 +37,12 @@ export const Comment: React.FC<Props> = ({ comment }) => {
           : console.log("become crew member")
       }
       className={cn(
-        "flex relative flex-col items-center gap-1 p-2 rounded-md border border-[var(--color-secondary)] shadow-lg",
+        "relative flex flex-col items-center gap-1 rounded-md border border-[var(--color-secondary)] p-2 shadow-lg",
         {
           "text-sm": isPhone,
           "text-md": isTablet,
           "text-lg": isDesktop,
-        }
+        },
       )}
     >
       {["admin"].includes(loggedUser.role) && isEdited && (
@@ -54,12 +54,12 @@ export const Comment: React.FC<Props> = ({ comment }) => {
         </div>
       )}
 
-      <p className="mb-1 tracking-widest font-extrabold text-[var(--color-secondary)] uppercase bg-[var(--color-primary-light)] px-2 rounded-md">
+      <p className="mb-1 rounded-md bg-[var(--color-primary-light)] px-2 font-extrabold uppercase tracking-widest text-[var(--color-secondary)]">
         Author:
       </p>
       <p className="text-[var(--color-primary-light)]">{comment.userId.name}</p>
 
-      <p className="mb-1 tracking-widest font-extrabold text-[var(--color-secondary)] uppercase bg-[var(--color-primary-light)] px-2 rounded-md">
+      <p className="mb-1 rounded-md bg-[var(--color-primary-light)] px-2 font-extrabold uppercase tracking-widest text-[var(--color-secondary)]">
         Comment:
       </p>
       <p className="text-[var(--color-primary-light)]">{comment.comment}</p>

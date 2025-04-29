@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
     <div className="flex justify-between">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className="flex gap-2 select-none active:text-[var(--color-primary-light)]"
+        className="flex select-none gap-2 active:text-[var(--color-primary-light)]"
       >
         <Menu size={25} />
         <p>Open menu</p>
@@ -57,7 +57,7 @@ export const Header: React.FC = () => {
         initial={{ y: "-100%", x: "100%" }}
         animate={{ y: isOpen ? "0%" : "-100%", x: isOpen ? "0%" : "100%" }}
         transition={{ type: "spring", stiffness: 80, damping: isOpen ? 5 : 10 }}
-        className="absolute z-20 top-0 left-0 right-0 bottom-0 bg-[var(--color-secondary)] text-white p-4 flex flex-col gap-3"
+        className="absolute bottom-0 left-0 right-0 top-0 z-20 flex flex-col gap-3 bg-[var(--color-secondary)] p-4 text-white"
       >
         <div
           onClick={() => setIsOpen((prevState) => !prevState)}
@@ -68,7 +68,7 @@ export const Header: React.FC = () => {
             size={25}
           />
 
-          <p className="select-none ">Close menu</p>
+          <p className="select-none">Close menu</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
               <Link
                 key={link.link}
                 onClick={() => handlerLink(link.name)}
-                className="border-2 text-center select-none rounded-full p-1 active:border-[var(--color-primary-light)]"
+                className="select-none rounded-full border-2 p-1 text-center active:border-[var(--color-primary-light)]"
                 to={link.link}
               >
                 {" "}
@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
         </div>
 
         <img
-          className="h-45 select-none m-auto rounded-full"
+          className="h-45 m-auto select-none rounded-full"
           src="./logo/Shop_logo14.jpg"
           alt="logo"
         />

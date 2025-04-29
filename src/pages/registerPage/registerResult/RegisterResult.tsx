@@ -5,7 +5,7 @@ const RegisterResult: React.FC = () => {
   const [URLSearchParams] = useSearchParams();
   const isSuccess = URLSearchParams.get("success");
   const navigate = useNavigate();
-  
+
   return (
     <>
       {isSuccess === "true" ? (

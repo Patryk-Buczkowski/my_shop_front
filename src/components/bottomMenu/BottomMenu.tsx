@@ -16,13 +16,13 @@ export const BottomMenu: React.FC = () => {
 
   return (
     <div
-      className={`flex box-border justify-center w-[80%] mt-3 gap-1 h-10 bg-[var(--color-primary)] p-3 relative rounded-full`}
+      className={`relative mt-3 box-border flex h-10 w-[80%] justify-center gap-1 rounded-full bg-[var(--color-primary)] p-3`}
     >
-      <div className="w-fit z-10 flex h-fit gap-5 m-auto text-sm">
+      <div className="z-10 m-auto flex h-fit w-fit gap-5 text-sm">
         {icons.map(({ component: Icon, name }) => (
           <div
             key={name}
-            className={cn("flex flex-col relative gap-0.5", {
+            className={cn("relative flex flex-col gap-0.5", {
               [style.icon_after]: selectedIcon === name,
             })}
             onClick={() => setSelectedIcon(name)}
@@ -43,7 +43,7 @@ export const BottomMenu: React.FC = () => {
         ))}
       </div>
 
-      <div className="w-[calc(100%-15px)] h-[40px] [clip-path:ellipse(50%_40%_at_50%_50%)] bg-inherit absolute bottom-0 transform -translate-y-[14px]" />
+      <div className="absolute bottom-0 h-[40px] w-[calc(100%-15px)] -translate-y-[14px] transform bg-inherit [clip-path:ellipse(50%_40%_at_50%_50%)]" />
     </div>
   );
 };

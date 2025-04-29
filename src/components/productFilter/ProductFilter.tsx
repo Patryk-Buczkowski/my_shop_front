@@ -9,10 +9,7 @@ type Props = {
   setPageNr: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export const ProductFilter: React.FC<Props> = ({
-  setPageNr,
-  setPerPage,
-}) => {
+export const ProductFilter: React.FC<Props> = ({ setPageNr, setPerPage }) => {
   const [searchParams, setSearchPrams] = useSearchParams();
   const [visibleCheckbox, setVisibleCheckbox] = useState(false);
   const [openCheckbox, setOpenCheckbox] = useState(false);
@@ -107,11 +104,11 @@ export const ProductFilter: React.FC<Props> = ({
   }, [maxPrice, minPrice, searchParams, setSearchPrams, titleQuery]);
 
   return (
-    <div className=" flex flex-wrap justify-center gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       <SelectElementsPerPage handlerSelect={handlerSelect} />
 
       <input
-        className="w-18 h-7 border-1 rounded-sm"
+        className="w-18 border-1 h-7 rounded-sm"
         type="text"
         name="title"
         value={titleQuery}
@@ -120,7 +117,7 @@ export const ProductFilter: React.FC<Props> = ({
       />
 
       <input
-        className="w-18 h-7 text-sm p-1 border-1 rounded-sm"
+        className="w-18 border-1 h-7 rounded-sm p-1 text-sm"
         min={0}
         value={minPrice === 0 ? "" : minPrice}
         name="minPrice"
@@ -130,7 +127,7 @@ export const ProductFilter: React.FC<Props> = ({
       />
 
       <input
-        className="w-18 h-7 text-sm p-1 border-1 rounded-sm"
+        className="w-18 border-1 h-7 rounded-sm p-1 text-sm"
         min={0}
         value={maxPrice === 0 ? "" : maxPrice}
         placeholder="max price"
@@ -142,13 +139,12 @@ export const ProductFilter: React.FC<Props> = ({
       <div className="relative mb-2">
         {visibleCheckbox && (
           <div
-            className={`z-10 invisible absolute p-1 transform translate-y-8
-           left-0 rounded-lg flex-col gap-1 bg-[var(--color-secondary)]  ${!openCheckbox ? styles.anime__close : styles.anime__open}`}
+            className={`invisible absolute left-0 z-10 translate-y-8 transform flex-col gap-1 rounded-lg bg-[var(--color-secondary)] p-1 ${!openCheckbox ? styles.anime__close : styles.anime__open}`}
           >
             {sortByArray.map((item) => (
               <label
                 key={item}
-                className=" flex justify-between w-27 rounded-sm border-1 pl-0.5 border-[var(--primary-light)]"
+                className="w-27 border-1 flex justify-between rounded-sm border-[var(--primary-light)] pl-0.5"
               >
                 {item}
                 <input
@@ -163,7 +159,7 @@ export const ProductFilter: React.FC<Props> = ({
         )}
 
         <button
-          className="w-18 text-sm p-1 border-1 rounded-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
+          className="w-18 border-1 rounded-sm p-1 text-sm active:border-[var(--color-primary)] active:text-[var(--color-primary)]"
           type="button"
           onClick={handlerCheckbox}
         >

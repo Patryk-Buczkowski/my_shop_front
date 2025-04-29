@@ -16,14 +16,14 @@ export const AllCategoriesProduct: React.FC<Props> = ({ product }) => {
       onClick={() => {
         navigate("/details", { state: product });
       }}
-      className="w-28 sm:w-35 border-2 border-[var(--color-primary-light)] rounded-lg mb-2 active:border-[var(--color-primary)]"
+      className="sm:w-35 mb-2 w-28 rounded-lg border-2 border-[var(--color-primary-light)] active:border-[var(--color-primary)]"
     >
       <img
-        className="w-18 sm:w-25  m-auto"
+        className="w-18 sm:w-25 m-auto"
         src={product.pictureUrl}
         alt="product picture"
       />
-      <div className="m-auto text-center max-h-20 sm:max-h-30 overflow-auto text-sm w-25 mb-1 sm:text-lg">
+      <div className="sm:max-h-30 w-25 m-auto mb-1 max-h-20 overflow-auto text-center text-sm sm:text-lg">
         {product.title}
       </div>
       <p className="text-center text-[var(--color-secondary)]">{`${product.price} $`}</p>

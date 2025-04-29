@@ -5,15 +5,15 @@ import { Header } from "../Header";
 export const Layout: React.FC = () => {
   return (
     <div className="w-[95vw]">
-      <header className="w-full z-20 h-[var(--header-height)] font-bold p-1 text-[var(--color-header-nav)]">
+      <header className="z-20 h-[var(--header-height)] w-full p-1 font-bold text-[var(--color-header-nav)]">
         <Header />
       </header>
 
-      <main className="z-10 p-1 overflow-auto min-h-[calc(100vh-(var(--header-height)))]">
+      <main className="z-10 min-h-[calc(100vh-(var(--header-height)))] overflow-auto p-1">
         <Outlet />
       </main>
 
-      <footer className="z-10 rounded-t-2xl bottom-0 left-0 right-0 border-1 h-[var(--footer-height)] border-transparent" >
+      <footer className="border-1 bottom-0 left-0 right-0 z-10 h-[var(--footer-height)] rounded-t-2xl border-transparent">
         <Footer />
       </footer>
     </div>

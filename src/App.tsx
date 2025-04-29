@@ -8,18 +8,18 @@ const LogIn = React.lazy(() => import("./pages/loginPage/Login.tsx"));
 const Home = React.lazy(() => import("./pages/homePage/Home/Home.tsx"));
 const Cart = React.lazy(() => import("./components/cart/Cart.tsx"));
 const AllCategories = React.lazy(
-  () => import("./pages/allCategoriesPage/allCategories/AllCategories.tsx")
+  () => import("./pages/allCategoriesPage/allCategories/AllCategories.tsx"),
 );
 const Register = React.lazy(
-  () => import("./pages/registerPage/register/Register.tsx")
+  () => import("./pages/registerPage/register/Register.tsx"),
 );
 const RegisterResult = React.lazy(
-  () => import("./pages/registerPage/registerResult/RegisterResult.tsx")
+  () => import("./pages/registerPage/registerResult/RegisterResult.tsx"),
 );
 
 function App() {
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="flex h-full w-full flex-col">
       <HashRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
