@@ -13,8 +13,7 @@ type LoggedType = {
   setLoggedUser: (value: LoggedUserType) => void;
   fetchUserData: () => Promise<void>;
   fetchProductData: () => Promise<void>;
-  deleteComment: (commentId: string) => Promise<true | undefined>
-  
+  deleteComment: (commentId: string) => Promise<true | undefined>;
 };
 
 const BACKEND = import.meta.env.VITE_BACKEND_URL;
@@ -24,7 +23,7 @@ export const useLoggedStore = create<LoggedType>((set) => ({
   isEdited: false,
   // EditedCommentId: "",
   EditedProductId: "",
-  setIsEdited:(value) => set({isEdited: value}),
+  setIsEdited: (value) => set({ isEdited: value }),
   // setEditedCommentId: (value) => set({ EditedCommentId: value }),
   setEditedProductId: (value) => set({ EditedProductId: value }),
   setLoggedUser: (value) => set({ loggedUser: value }),
@@ -35,7 +34,7 @@ export const useLoggedStore = create<LoggedType>((set) => ({
         `${BACKEND}/deleteComment/${commentId}`,
         {
           withCredentials: true,
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -64,24 +63,25 @@ export const useLoggedStore = create<LoggedType>((set) => ({
 
   fetchProductData: async (): Promise<void> => {
     const { EditedProductId } = useLoggedStore.getState();
-  
+
     if (!EditedProductId) {
       console.warn("No EditedProductId set.");
       return;
     }
-  
+
     try {
-      const response = await axios.get(`${BACKEND}/product/${EditedProductId}`, {
-        withCredentials: true,
-      });
-      
-      return response.data
-      
+      const response = await axios.get(
+        `${BACKEND}/product/${EditedProductId}`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      return response.data;
     } catch (error) {
       console.error("Fetch product error", error);
     }
   },
-  
 }));
 
 useLoggedStore.getState().fetchUserData();

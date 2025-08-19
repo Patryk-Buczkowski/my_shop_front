@@ -38,9 +38,7 @@ const AllCategories: React.FC = () => {
     const Products = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get(
-          `${BACKEND}/filterProduct`,
-        );
+        const response = await api.get(`${BACKEND}/filterProduct`);
         if (response.data) {
           setSelectedCategoryProducts(response.data);
         }

@@ -11,11 +11,11 @@ type CartStore = {
 };
 
 const calculateTotalSum = (cart: ProductType[]) => {
-    return cart.reduce(
-      (acc, product) => acc + product.price * (product.amount || 1),
-      0
-    );
-  };
+  return cart.reduce(
+    (acc, product) => acc + product.price * (product.amount || 1),
+    0,
+  );
+};
 
 export const useCartStore = create<CartStore>((set) => ({
   cart: JSON.parse(localStorage.getItem("cart") || "[]"),
@@ -23,38 +23,57 @@ export const useCartStore = create<CartStore>((set) => ({
 
   addToCart: (item) =>
     set((state) => {
-      const existingItem = state.cart.find((product) => product._id === item._id);
+      const existingItem = state.cart.find(
+        (product) => product._id === item._id,
+      );
 
       let updatedCart;
       if (existingItem) {
         updatedCart = state.cart.map((product) =>
           product._id === item._id
             ? { ...product, amount: product.amount + 1 }
-            : product
+            : product,
         );
       } else {
         updatedCart = [...state.cart, { ...item, amount: 1 }];
       }
-      
+
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return { cart: updatedCart, totalSum: calculateTotalSum(JSON.parse(localStorage.getItem("cart") || "[]")) };
+      return {
+        cart: updatedCart,
+        totalSum: calculateTotalSum(
+          JSON.parse(localStorage.getItem("cart") || "[]"),
+        ),
+      };
     }),
 
   removeFromCart: (id) =>
     set((state) => {
       const updatedCart = state.cart.filter((product) => product._id !== id);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return { cart: updatedCart, totalSum: calculateTotalSum(JSON.parse(localStorage.getItem("cart") || "[]")) };
+      return {
+        cart: updatedCart,
+        totalSum: calculateTotalSum(
+          JSON.parse(localStorage.getItem("cart") || "[]"),
+        ),
+      };
     }),
 
   increaseAmount: (id) =>
     set((state) => {
       const updatedCart = state.cart.map((product) =>
-        product._id === id ? { ...product, amount: product.amount + 1 } : product
+        product._id === id
+          ? { ...product, amount: product.amount + 1 }
+          : product,
       );
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return { cart: updatedCart, totalSum: calculateTotalSum(JSON.parse(localStorage.getItem("cart") || "[]")) };
+      return {
+        cart: updatedCart,
+        totalSum: calculateTotalSum(
+          JSON.parse(localStorage.getItem("cart") || "[]"),
+        ),
+      };
     }),
 
   decreaseAmount: (id) =>
@@ -63,11 +82,16 @@ export const useCartStore = create<CartStore>((set) => ({
         .map((product) =>
           product._id === id
             ? { ...product, amount: product.amount - 1 }
-            : product
+            : product,
         )
         .filter((product) => product.amount > 0);
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      return { cart: updatedCart, totalSum: calculateTotalSum(JSON.parse(localStorage.getItem("cart") || "[]")) };
+      return {
+        cart: updatedCart,
+        totalSum: calculateTotalSum(
+          JSON.parse(localStorage.getItem("cart") || "[]"),
+        ),
+      };
     }),
 }));

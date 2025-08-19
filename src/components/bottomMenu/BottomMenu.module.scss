@@ -1,14 +1,12 @@
 .icon_after {
-    
-    &::after {
-        content: '';
-        width: 2px;
-        height: 2px;
-        background-color: black;
-        position: absolute;
-        left: calc(50% - 1px);
-        transform: translateY(-200%);
-        border-radius: 50%;
-    }
-    
+  &::after {
+    content: "";
+    width: 2px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    left: calc(50% - 1px);
+    transform: translateY(-200%);
+    border-radius: 50%;
+  }
 }

@@ -11,36 +11,46 @@ const BREAKPOINTS = {
 // type Breakpoint = keyof typeof BREAKPOINTS;
 
 interface BreakpointState {
-    isPhone: boolean;
-    isTablet: boolean;
-    isDesktop: boolean;
-    isWideScreen: boolean;
-    updateBreakpoints: () => void;
-  }
+  isPhone: boolean;
+  isTablet: boolean;
+  isDesktop: boolean;
+  isWideScreen: boolean;
+  updateBreakpoints: () => void;
+}
 
-  export const useBreakpointStore = create<BreakpointState>((set) => ({
-    isPhone: window.innerWidth < BREAKPOINTS.tablet,
-    isTablet: window.innerWidth >= BREAKPOINTS.tablet && window.innerWidth < BREAKPOINTS.desktop,
-    isDesktop: window.innerWidth >= BREAKPOINTS.desktop && window.innerWidth < BREAKPOINTS.wideScreen,
-    isWideScreen: window.innerWidth >= BREAKPOINTS.wideScreen,
-  
-    updateBreakpoints: () => {
-      set({
-        isPhone: window.innerWidth < BREAKPOINTS.tablet,
-        isTablet: window.innerWidth >= BREAKPOINTS.tablet && window.innerWidth < BREAKPOINTS.desktop,
-        isDesktop: window.innerWidth >= BREAKPOINTS.desktop && window.innerWidth < BREAKPOINTS.wideScreen,
-        isWideScreen: window.innerWidth >= BREAKPOINTS.wideScreen,
-      });
-    },
-  }));
+export const useBreakpointStore = create<BreakpointState>((set) => ({
+  isPhone: window.innerWidth < BREAKPOINTS.tablet,
+  isTablet:
+    window.innerWidth >= BREAKPOINTS.tablet &&
+    window.innerWidth < BREAKPOINTS.desktop,
+  isDesktop:
+    window.innerWidth >= BREAKPOINTS.desktop &&
+    window.innerWidth < BREAKPOINTS.wideScreen,
+  isWideScreen: window.innerWidth >= BREAKPOINTS.wideScreen,
 
-  export const useBreakpointListener = () => {
-    const updateBreakpoints = useBreakpointStore((state) => state.updateBreakpoints);
-  
-    useEffect(() => {
-      const handleResize = () => updateBreakpoints();
-  
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, [updateBreakpoints]);
-  };
+  updateBreakpoints: () => {
+    set({
+      isPhone: window.innerWidth < BREAKPOINTS.tablet,
+      isTablet:
+        window.innerWidth >= BREAKPOINTS.tablet &&
+        window.innerWidth < BREAKPOINTS.desktop,
+      isDesktop:
+        window.innerWidth >= BREAKPOINTS.desktop &&
+        window.innerWidth < BREAKPOINTS.wideScreen,
+      isWideScreen: window.innerWidth >= BREAKPOINTS.wideScreen,
+    });
+  },
+}));
+
+export const useBreakpointListener = () => {
+  const updateBreakpoints = useBreakpointStore(
+    (state) => state.updateBreakpoints,
+  );
+
+  useEffect(() => {
+    const handleResize = () => updateBreakpoints();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [updateBreakpoints]);
+};

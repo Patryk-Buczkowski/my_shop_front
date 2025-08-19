@@ -1,1 +1,1 @@
-export {AllCategoriesListItem} from './AllCategoriesListItem'
+export { AllCategoriesListItem } from "./AllCategoriesListItem";

@@ -26,7 +26,6 @@
 }
 
 .anime {
-
   &__open {
     animation: slowShow 1s ease-in forwards;
   }
@@ -35,4 +34,3 @@
     animation: slowHide 1s ease-out;
   }
 }
-

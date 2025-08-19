@@ -15,7 +15,7 @@ const LogIn: React.FC = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      email: 'patryk.buczkowski.oferty.pracy@outlook.com',
+      email: "patryk.buczkowski.oferty.pracy@outlook.com",
       password: "1q2w3e4r$R",
     },
     validationSchema,
@@ -43,9 +43,8 @@ const LogIn: React.FC = () => {
   });
 
   const isButtonDisabled =
-    // !formik.dirty || 
-    !formik.isValid  || 
-    formik.isSubmitting;
+    // !formik.dirty ||
+    !formik.isValid || formik.isSubmitting;
 
   return (
     <FormikProvider value={formik}>
